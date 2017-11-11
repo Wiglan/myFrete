@@ -1,0 +1,127 @@
+package com.wfrete.wfrete2.activity;
+
+import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.wfrete.wfrete2.R;
+import com.wfrete.wfrete2.MainActivity;
+import com.wfrete.wfrete2.adapter.MotoristaAdapter;
+import com.wfrete.wfrete2.dao.MotoristaDAO;
+import com.wfrete.wfrete2.model.Motorista;
+
+/**
+ * Created by Desenvolvimento 11 on 06/11/2017.
+ */
+
+public class MotoristaListarActivity extends Fragment {
+
+    private static final int ID_COMANDO_NOVO_CADASTRO = 1;
+    private static final int ID_COMANDO_EDITAR_REG = 7;
+    private FloatingActionButton fab;
+    View viewMotorista;
+
+    RecyclerView recyclerViewListaMotorista;
+    MotoristaAdapter motoristaAdapter;
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        viewMotorista = inflater.inflate(R.layout.lista_motorista, container, false);
+        return viewMotorista;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fabMotorista);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), MotoristaCadastrarActivity.class);
+                startActivityForResult(i,ID_COMANDO_NOVO_CADASTRO);
+            }
+        });
+
+
+        configurarRecycler(view);
+
+    }
+
+
+    public void btEditarMotoristaOnClick(Motorista motorista){
+        Intent i = new Intent(getActivity(), MotoristaCadastrarActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        i.putExtra("motorista", motorista);
+        startActivityForResult(i,ID_COMANDO_EDITAR_REG);
+    }
+
+
+    private void configurarRecycler(View view) {
+        // Configurando o gerenciador de layout para ser uma lista.
+        recyclerViewListaMotorista = (RecyclerView)view.findViewById(R.id.rvListaMotoristas);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        recyclerViewListaMotorista.setLayoutManager(layoutManager);
+
+        // Adiciona o adapter que irá anexar os objetos à lista.
+        MotoristaDAO dao = new MotoristaDAO(view.getContext());
+        motoristaAdapter = new MotoristaAdapter(dao.ListarMotoristas(), this);
+        recyclerViewListaMotorista.setAdapter(motoristaAdapter);
+        recyclerViewListaMotorista.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (data != null){
+            if (requestCode == ID_COMANDO_NOVO_CADASTRO){
+
+                //retornou com um novo motorista cadastrado.
+                if (resultCode == 2) {
+
+                    if (data.hasExtra("motorista")) {
+                        Motorista motorista = new Motorista();
+                        motorista = (Motorista) data.getSerializableExtra("motorista");
+                        motoristaAdapter.adicionarMotorista(motorista);
+
+                        Snackbar.make(getView(), "Motorista salvo com sucesso!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+
+                    }
+                }
+            }else if (requestCode == ID_COMANDO_EDITAR_REG){
+
+                //retornou com um motorista alterado.
+                if (resultCode == 5) {
+
+                    if (data.hasExtra("motorista")) {
+                        Motorista motorista = new Motorista();
+                        motorista = (Motorista) data.getSerializableExtra("motorista");
+                        motoristaAdapter.atualizarMotorista(motorista);
+
+                        Snackbar.make(getView(), "Motorista salvo com sucesso!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+
+                    }
+                }
+            }
+
+        }
+
+    }
+}

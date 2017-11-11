@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Controle de Frete</string>
+
+
+    <string name="nav_bar_veiculos">Veículos</string>
+    <string name="nav_bar_motoristas">Motoristas</string>
+    <string name="nav_bar_fretes">Fretes</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Configurações</string>
+</resources>

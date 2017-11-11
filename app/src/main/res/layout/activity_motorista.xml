@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.wfrete.wfrete2.activity.MotoristaCadastrarActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Motorista"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:id="@+id/edtNomeMotorista"
+        android:hint="Digite o nome do motorista"
+        />
+
+    <TextView
+        android:paddingTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CPF"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text|phone"
+        android:id="@+id/edtCpfMotorista"
+        android:hint="Digite o CPF do motorista"
+        />
+
+    <TextView
+        android:paddingTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Telefone"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text|phone"
+        android:id="@+id/edtTelefoneMotorista"
+        android:hint="Digite o Telefone do motorista"
+        />
+
+
+    <LinearLayout
+        android:paddingTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:text="Cancelar"
+            android:id="@+id/btCancelarMotorista"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="btCancelarOnClick"
+            />
+
+        <Button
+            android:text="Salvar"
+            android:id="@+id/btSalvarMotorista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="btSalvarOnClick"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

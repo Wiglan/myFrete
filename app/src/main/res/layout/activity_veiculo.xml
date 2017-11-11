@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.wfrete.wfrete2.activity.VeiculoCadastrarActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Identificação Veículo"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:id="@+id/edtNomeVeiculo"
+        android:hint="TORNADO"
+        />
+
+    <TextView
+        android:paddingTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Modelo"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences"
+        android:id="@+id/edtModeloVeiculo"
+        android:hint="SCANIA 1113"
+        />
+
+    <TextView
+        android:paddingTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Placa"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences"
+        android:id="@+id/edtPlacaVeiculo"
+        android:hint="ARK-8167"
+        />
+
+    <TextView
+        android:paddingTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ano"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/edtAnoVeiculo"
+        android:hint="1990"
+        />
+
+    <LinearLayout
+        android:paddingTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:text="Cancelar"
+            android:id="@+id/btCancelarVeiculo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="btCancelarOnClick"
+            />
+
+        <Button
+            android:text="Salvar"
+            android:id="@+id/btSalvarVeiculo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="btSalvarOnClick"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
