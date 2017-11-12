@@ -162,7 +162,7 @@ public class FreteCadastrarActivity extends AppCompatActivity {
                             finish();
                         } else {
 
-                            Snackbar.make(view, "Erro ao excluir o Frete!", Snackbar.LENGTH_LONG)
+                            Snackbar.make(view, "Erro ao Excluir o Frete!", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }
                     }
