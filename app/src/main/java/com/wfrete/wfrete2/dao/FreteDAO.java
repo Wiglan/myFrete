@@ -64,7 +64,7 @@ public class FreteDAO {
 
     public List<Frete> ListarFretes(){
         List<Frete> fretes = new ArrayList<>();
-        Cursor cursor = gw.getDatabase().rawQuery("SELECT * FROM Fretes", null);
+        Cursor cursor = gw.getDatabase().rawQuery("SELECT * FROM Fretes ORDER BY ID DESC", null);
         while(cursor.moveToNext()){
             int id = cursor.getInt(cursor.getColumnIndex("ID"));
             int nro_cte = cursor.getInt(cursor.getColumnIndex("NRO_CTE"));

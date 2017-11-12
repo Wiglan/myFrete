@@ -9,14 +9,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.wfrete.wfrete2.activity.FreteCadastrarActivity">
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical">
 
         <TextView
-            android:paddingTop="15dp"
+            android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nro. CTE"/>
+            android:text="Número do CTE"
+            android:textColor="#000"
+            />
 
         <EditText
             android:layout_width="match_parent"
@@ -25,6 +28,103 @@
             android:id="@+id/edtNro_CteFrete"
             android:hint="455214"
             />
+
+
+
+
+
+        <TextView
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Valor do Frete/Tonelada"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:text="R$"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:id="@+id/edtVlr_TonFrete"
+            android:hint="45,50" />
+        </LinearLayout>
+
+
+
+
+
+        <TextView
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Peso Carga"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Kg"/>
+
+            <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:id="@+id/edtPesoFrete"
+            android:hint="10.000"
+            />
+        </LinearLayout>
+
+
+
+
+
+
+
+        <TextView
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Valor Total do Frete"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="R$"/>
+            <EditText
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:id="@+id/edtVlr_TotalFrete"
+                android:hint="4.555,00" />
+
+            <ImageButton
+                android:id="@+id/btnCalculaTotalFrete"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="right"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:background="@android:color/transparent"
+                android:scaleType="center"
+                android:src="@mipmap/ic_dinheiro"
+                android:onClick="btCalcularTotalFreteOnClick"/>
+
+        </LinearLayout>
 
 
         <TextView
@@ -36,7 +136,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="textCapSentences|textAutoCorrect|textAutoComplete"
             android:id="@+id/edtOrigemFrete"
             android:hint="Pato Branco - PR"
             />
@@ -50,52 +150,36 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="textCapSentences|textAutoCorrect|textAutoComplete"
             android:id="@+id/edtDestinoFrete"
             android:hint="Presidente Prudente - SP"
             />
 
-
         <TextView
-            android:paddingTop="5dp"
+            android:paddingTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Valor do Frete/Tonelada"/>
+            android:text="Informe o Motorista"/>
 
-        <EditText
+        <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:id="@+id/edtVlr_TonFrete"
-            android:hint="45,50"
+            android:id="@+id/acMotoristaFrete"
+            android:hint="digite para iniciar a busca"
             />
 
-        <TextView
-            android:paddingTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Peso Carga"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:id="@+id/edtPesoFrete"
-            android:hint="Kg 10.000"
-            />
 
         <TextView
-            android:paddingTop="5dp"
+            android:paddingTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Valor Total do Frete"/>
+            android:text="Informe o Veículo"/>
 
-        <EditText
+        <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:id="@+id/edtVlr_TotalFrete"
-            android:hint="R$ 4555,00"
+            android:id="@+id/acVeiculoFrete"
+            android:hint="digite para iniciar a busca"
             />
 
 
@@ -105,13 +189,20 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
             <Button
                 android:text="Cancelar"
                 android:id="@+id/btCancelarFrete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="btCancelarOnClick"
+                />
+
+            <Button
+                android:text="Excluir"
+                android:id="@+id/btExcluirFrete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="btExcluirFreteOnClick"
                 />
 
             <Button

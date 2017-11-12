@@ -113,6 +113,20 @@ public class FreteListarActivity extends Fragment {
                                 .setAction("Action", null).show();
 
                     }
+
+                }
+                //nesse caso, retornou que excluiu o frete.
+                else if (resultCode == 13){
+
+                    if (data.hasExtra("frete")) {
+                        Frete frete = new Frete();
+                        frete = (Frete) data.getSerializableExtra("frete");
+                        freteAdapter.removerFrete(frete);
+                        Snackbar.make(getView(), "Frete Excluído com sucesso!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+
+                    }
+
                 }
             }
 
