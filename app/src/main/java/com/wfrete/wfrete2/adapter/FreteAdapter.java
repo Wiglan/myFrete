@@ -79,7 +79,7 @@ public class FreteAdapter extends RecyclerView.Adapter<FreteHolder> {
         holder.txtOrigem.setText(fretes.get(position).getOrigem());
         holder.txtDestino.setText(fretes.get(position).getDestino());
         holder.txtVlrTotal.setText(vlrTotal);
-        holder.txtCliente.setText("Wiglan mariani");
+        holder.txtCliente.setText(fretes.get(position).getCliente());
 
         final Frete frete = fretes.get(position);
 

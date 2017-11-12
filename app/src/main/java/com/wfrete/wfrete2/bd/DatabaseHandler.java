@@ -17,7 +17,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private final String CREATE_TABLE_FRETES = "CREATE TABLE FRETES (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                               "NRO_CTE INTEGER,ORIGEM TEXT NOT NULL,DESTINO TEXT NOT NULL, " +
                                               "VLR_TON DOUBLE PRECISION, PESO DOUBLE PRECISION, VLR_TOTAL DOUBLE PRECISION, "+
-                                              "DATA_ABERTURA DATE, DATA_ENCERRAMENTO DATE, MOTORISTA_ID INTEGER, VEICULO_ID INTEGER, " +
+                                              "DATA_ABERTURA DATE, DATA_ENCERRAMENTO DATE, MOTORISTA_ID INTEGER, VEICULO_ID INTEGER, CLIENTE TEXT," +
                                               "FOREIGN KEY(MOTORISTA_ID) REFERENCES MOTORISTAS(ID),FOREIGN KEY(VEICULO_ID) REFERENCES VEICULOS(ID) )";
 
 

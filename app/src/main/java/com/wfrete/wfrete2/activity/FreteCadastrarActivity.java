@@ -58,6 +58,8 @@ public class FreteCadastrarActivity extends AppCompatActivity {
     EditText edtVlr_Total;
     AutoCompleteTextView acMotorista;
     AutoCompleteTextView acVeiculo;
+    EditText edtCliente;
+
 
     Button btCancelar;
     Button btSalvar;
@@ -79,6 +81,7 @@ public class FreteCadastrarActivity extends AppCompatActivity {
         edtVlr_Ton = (EditText)findViewById(R.id.edtVlr_TonFrete);
         edtPeso = (EditText)findViewById(R.id.edtPesoFrete);
         edtVlr_Total = (EditText)findViewById(R.id.edtVlr_TotalFrete);
+        edtCliente = (EditText)findViewById(R.id.edtClienteFrete);
 
         acMotorista = (AutoCompleteTextView)findViewById(R.id.acMotoristaFrete);
         acVeiculo = (AutoCompleteTextView) findViewById(R.id.acVeiculoFrete);
@@ -102,6 +105,8 @@ public class FreteCadastrarActivity extends AppCompatActivity {
             edtVlr_Ton.setText(String.valueOf(freteEditado.getVlr_ton()));
             edtPeso.setText(String.valueOf(freteEditado.getPeso()));
             edtVlr_Total.setText(String.valueOf(freteEditado.getVlr_total()));
+            edtCliente.setText(freteEditado.getCliente());
+
 
             //posicionar no motorista do frete
             String text = "";
@@ -132,6 +137,7 @@ public class FreteCadastrarActivity extends AppCompatActivity {
             edtVlr_Total.setText("");
             acVeiculo.setText("");
             acMotorista.setText("");
+            edtCliente.setText("");
 
             btExcluir.setVisibility(View.INVISIBLE);
 
@@ -220,7 +226,8 @@ public class FreteCadastrarActivity extends AppCompatActivity {
                                   data,
                                   data,
                                   getIdAutoCompleteList(acMotorista.getText().toString()),
-                                  getIdAutoCompleteList(acVeiculo.getText().toString()));
+                                  getIdAutoCompleteList(acVeiculo.getText().toString()),
+                                  edtCliente.getText().toString());
 
         }
         else {
@@ -237,7 +244,8 @@ public class FreteCadastrarActivity extends AppCompatActivity {
                     data,
                     data,
                     getIdAutoCompleteList(acMotorista.getText().toString()),
-                    getIdAutoCompleteList(acVeiculo.getText().toString()));
+                    getIdAutoCompleteList(acVeiculo.getText().toString()),
+                    edtCliente.getText().toString());
 
         }
 
@@ -266,7 +274,6 @@ public class FreteCadastrarActivity extends AppCompatActivity {
         freteEditado = null;
 
     }
-
 
     public boolean validarCamposCadastro(){
 

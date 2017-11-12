@@ -32,11 +32,11 @@ public class FreteDAO {
         gw = DbGateway.getInstance(ctx);
     }
 
-    public boolean salvar(int nro_cte, String origem, String destino, double vlr_ton, double peso, double vlr_total, Date data_abertura, Date data_encerramento, int motorista_id, int veiculo_id){
-        return salvar(0, nro_cte, origem, destino, vlr_ton, peso, vlr_total, data_abertura, data_encerramento, motorista_id, veiculo_id);
+    public boolean salvar(int nro_cte, String origem, String destino, double vlr_ton, double peso, double vlr_total, Date data_abertura, Date data_encerramento, int motorista_id, int veiculo_id, String cliente){
+        return salvar(0, nro_cte, origem, destino, vlr_ton, peso, vlr_total, data_abertura, data_encerramento, motorista_id, veiculo_id, cliente);
     }
 
-    public boolean salvar(int id, int nro_cte, String origem, String destino, double vlr_ton, double peso, double vlr_total, Date data_abertura, Date data_encerramento, int motorista_id, int veiculo_id){
+    public boolean salvar(int id, int nro_cte, String origem, String destino, double vlr_ton, double peso, double vlr_total, Date data_abertura, Date data_encerramento, int motorista_id, int veiculo_id, String cliente){
 
         ContentValues cv = new ContentValues();
 
@@ -50,6 +50,8 @@ public class FreteDAO {
         cv.put("data_encerramento", dateFormat.format(data_encerramento));
         cv.put("motorista_id", motorista_id);
         cv.put("veiculo_id", veiculo_id);
+        cv.put("cliente", cliente);
+
 
         if(id > 0)
             return gw.getDatabase().update(TABLE_FRETES, cv, "ID=?", new String[]{ id + "" }) > 0;
@@ -73,6 +75,7 @@ public class FreteDAO {
             double vlr_ton = cursor.getDouble(cursor.getColumnIndex("VLR_TON"));
             double peso = cursor.getDouble(cursor.getColumnIndex("PESO"));
             double vlr_total = cursor.getDouble(cursor.getColumnIndex("VLR_TOTAL"));
+            String cliente = cursor.getString(cursor.getColumnIndex("CLIENTE"));
 
             Date data_abertura = null;
             Date data_encerramento = null;
@@ -85,7 +88,7 @@ public class FreteDAO {
             int motorista_id = cursor.getInt(cursor.getColumnIndex("MOTORISTA_ID"));
             int veiculo_id = cursor.getInt(cursor.getColumnIndex("VEICULO_ID"));
 
-            fretes.add(new Frete(id,nro_cte,origem,destino,vlr_ton,peso,vlr_total,data_abertura, data_encerramento, motorista_id, veiculo_id));
+            fretes.add(new Frete(id,nro_cte,origem,destino,vlr_ton,peso,vlr_total,data_abertura, data_encerramento, motorista_id, veiculo_id, cliente));
         }
         cursor.close();
         return fretes;
@@ -103,6 +106,7 @@ public class FreteDAO {
             double vlr_ton = cursor.getDouble(cursor.getColumnIndex("VLR_TON"));
             double peso = cursor.getDouble(cursor.getColumnIndex("PESO"));
             double vlr_total = cursor.getDouble(cursor.getColumnIndex("VLR_TOTAL"));
+            String cliente = cursor.getString(cursor.getColumnIndex("CLIENTE"));
 
             Date data_abertura = null;
             Date data_encerramento = null;
@@ -117,7 +121,7 @@ public class FreteDAO {
 
 
             cursor.close();
-            return new Frete(id,nro_cte,origem,destino,vlr_ton,peso,vlr_total,data_abertura, data_encerramento, motorista_id, veiculo_id);
+            return new Frete(id,nro_cte,origem,destino,vlr_ton,peso,vlr_total,data_abertura, data_encerramento, motorista_id, veiculo_id, cliente);
         }
 
         return null;
@@ -136,6 +140,7 @@ public class FreteDAO {
             double vlr_ton = cursor.getDouble(cursor.getColumnIndex("VLR_TON"));
             double peso = cursor.getDouble(cursor.getColumnIndex("PESO"));
             double vlr_total = cursor.getDouble(cursor.getColumnIndex("VLR_TOTAL"));
+            String cliente = cursor.getString(cursor.getColumnIndex("CLIENTE"));
 
             Date data_abertura = null;
             Date data_encerramento = null;
@@ -150,7 +155,7 @@ public class FreteDAO {
 
 
             cursor.close();
-            return new Frete(id,nro_cte,origem,destino,vlr_ton,peso,vlr_total,data_abertura, data_encerramento, motorista_id, veiculo_id);
+            return new Frete(id,nro_cte,origem,destino,vlr_ton,peso,vlr_total,data_abertura, data_encerramento, motorista_id, veiculo_id, cliente);
 
         }
         else {

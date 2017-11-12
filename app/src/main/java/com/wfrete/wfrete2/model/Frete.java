@@ -20,11 +20,12 @@ public class Frete implements Serializable {
     private Date data_encerramento;
     private int motorista_id;
     private int veiculo_id;
+    private String cliente;
 
     public Frete() {
     }
 
-    public Frete(int id, int nro_cte, String origem, String destino, double vlr_ton, double peso, double vlr_total, Date data_abertura, Date data_encerramento, int motorista_id, int veiculo_id) {
+    public Frete(int id, int nro_cte, String origem, String destino, double vlr_ton, double peso, double vlr_total, Date data_abertura, Date data_encerramento, int motorista_id, int veiculo_id, String cliente) {
         this.id = id;
         this.nro_cte = nro_cte;
         this.origem = origem;
@@ -36,6 +37,7 @@ public class Frete implements Serializable {
         this.data_encerramento = data_encerramento;
         this.motorista_id = motorista_id;
         this.veiculo_id = veiculo_id;
+        this.cliente = cliente;
     }
 
     public int getId() {
@@ -125,6 +127,16 @@ public class Frete implements Serializable {
     public void setVeiculo_id(int veiculo_id) {
         this.veiculo_id = veiculo_id;
     }
+
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
 
     @Override
     public boolean equals(Object o) {

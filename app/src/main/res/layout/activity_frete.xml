@@ -156,6 +156,20 @@
             />
 
         <TextView
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="informe o Cliente"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences|textAutoCorrect|textAutoComplete"
+            android:id="@+id/edtClienteFrete"
+            android:hint="Wiglan Mariani"
+            />
+
+        <TextView
             android:paddingTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
