@@ -1,14 +1,18 @@
 package com.wfrete.wfrete2.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.adapter.AdapterCategoria;
+import com.wfrete.wfrete2.dao.CategoriaDAO;
 import com.wfrete.wfrete2.model.Categoria;
 
 import java.util.ArrayList;
@@ -21,44 +25,89 @@ import java.util.List;
 public class CategoriaListarActivity extends AppCompatActivity{
 
 
-    private ListView lvProdutos;
-    private final List<Categoria> categorias = new ArrayList<Categoria>();
 
-    private static final int COD_RETORNO = 10;
+    private static final int ID_COM_CANCELADO = 9;
+    private static final int ID_COM_CADASTRAR_NOVO = 1;
+    private static final int ID_COM_REG_SELECIONADO = 22;
+
+
+    private Button btCancelar;
+    private Button btNovaCategoria;
+
+    private ListView lvCategorias;
+
+    private List<Categoria> categorias = new ArrayList<Categoria>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lista_categoria);
 
-        lvProdutos = (ListView) findViewById(R.id.lvCategorias);
+        btNovaCategoria = (Button) findViewById(R.id.btNovaCategoriaListar);
+        btCancelar = (Button) findViewById(R.id.btCancelarCategoriaListar);
+
+        lvCategorias = (ListView) findViewById(R.id.lvCategorias);
 
 
-        Categoria c = new Categoria(1,"Categoria", "Despesa");
-        categorias.add(c);
+        configurarAdapterListCategorias();
 
-        lvProdutos.setAdapter(new AdapterCategoria(this,categorias));
+
+        btNovaCategoria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), CategoriaCadastrarActivity.class);
+                startActivityForResult(i,ID_COM_CADASTRAR_NOVO);
+            }
+        });
+
+
+        btCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = getIntent();
+                setResult(ID_COM_CANCELADO, i);
+                finish();
+            }
+        });
 
 
         //tratar o clique no item do listVeiew
-        lvProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvCategorias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tratarEventoClick(position);
+                Intent i = getIntent();
+                i.putExtra("categoria", categorias.get(position));
+                setResult(ID_COM_REG_SELECIONADO, i);
+                finish();
             }
         });
 
     }
 
-    private void tratarEventoClick(int position) {
+    private void configurarAdapterListCategorias() {
 
-        int cod = position + 1;
-        Intent i = getIntent();
-        i.putExtra("codigo", cod);
+        categorias = new CategoriaDAO(this).ListarCategorias();
+        lvCategorias.setAdapter(new AdapterCategoria(this,categorias));
 
-        setResult(10, i);
-
-        finish();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+
+        if (data != null){
+            if (requestCode == ID_COM_CADASTRAR_NOVO){
+
+                //inseriu uma nova categoria
+                if (resultCode == 2){
+
+                    if (data.hasExtra("categoria")) {
+                        configurarAdapterListCategorias();
+                    }
+                }
+            }
+        }
+
+    }
+
 
 }

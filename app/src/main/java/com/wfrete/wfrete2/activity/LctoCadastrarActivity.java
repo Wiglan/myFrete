@@ -3,6 +3,7 @@ package com.wfrete.wfrete2.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -46,6 +48,7 @@ public class LctoCadastrarActivity extends AppCompatActivity {
     private static final int ID_COM_REG_ALTERADO = 5;
     private static final int ID_COM_CANCELADO = 9;
     private static final int ID_COM_REG_DELETADO = 13;
+    private static final int ID_COM_LISTAR = 0;
 
     private String[] lsCategorias = new String[]{"Categoria", "Combustível", "Peças", "Pneu", "Almoço", "hotel", "Depósitos", "Nova Categoria"};
 
@@ -55,16 +58,17 @@ public class LctoCadastrarActivity extends AppCompatActivity {
     EditText edtVlr;
     TextView txtData;
     TextView txtHorario;
-    Spinner spCategoria;
     EditText edtObs;
+    TextView txtCategoria;
 
     Button btCancelar;
     Button btExcluir;
     Button btSalvar;
 
+    ImageView imgCategoria;
+
     private Lcto lctoEditado = null;
 
-    private final List<Categoria> categorias = new ArrayList<Categoria>();
 
 
     @Override
@@ -76,48 +80,27 @@ public class LctoCadastrarActivity extends AppCompatActivity {
         edtObs = (EditText)findViewById(R.id.edtObsLcto);
         txtData = (TextView) findViewById(R.id.txtDataLcto);
         txtHorario = (TextView) findViewById(R.id.txtHorarioLcto);
-
-        spCategoria = (Spinner) findViewById(R.id.spCagetoriaLcto);
+        txtCategoria = (TextView) findViewById(R.id.txtCategoriaLcto);
 
         btSalvar = (Button) findViewById(R.id.btSalvarLcto);
         btCancelar = (Button) findViewById(R.id.btCancelarLcto);
         btExcluir = (Button) findViewById(R.id.btExcluirLcto);
 
-        Categoria c = new Categoria(1,"Categoria", "Despesa");
-        categorias.add(c);
+        imgCategoria = (ImageView) findViewById(R.id.imgBotaoCategoria);
 
-        spCategoria.setAdapter(new AdapterCategoria(this,categorias));
-
-        spCategoria.setOnTouchListener(new View.OnTouchListener() {
+        //tratar o clique para mostrar as categoiras;
+        imgCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-
-                Toast.makeText(getBaseContext(), "CRICOOOOU", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(view.getContext(), CategoriaListarActivity.class);
-                startActivityForResult(i,10);
-
-
-                return false;
+            public void onClick(View v) {
+                tratarSelecaoCategoria(v);
             }
         });
-
-        spCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
+        txtCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onClick(View v) {
+                tratarSelecaoCategoria(v);
             }
         });
-
-        //LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayoutCategoria);
-        //linearLayout.addView(spCategoria,1);
-
 
         //se na criacao, tem o motorista, entao eh uma edicao de registro.
         Intent intent = getIntent();
@@ -142,13 +125,10 @@ public class LctoCadastrarActivity extends AppCompatActivity {
 
     }
 
-
-    public void tratarSelecaoSpinner(View view){
-        String  nome = (String) spCategoria.getSelectedItem();
-        long id = spCategoria.getSelectedItemId();
-        int posicao = spCategoria.getSelectedItemPosition();
-
-        Toast.makeText(this, "Slecionou " + nome + " -> id " + id + " -> posicao " + posicao, Toast.LENGTH_SHORT).show();
+    public void tratarSelecaoCategoria(View view){
+        Intent i = new Intent(this, CategoriaListarActivity.class);
+        i.putExtra("categoria", txtCategoria.getText().toString());
+        startActivityForResult(i,ID_COM_LISTAR);
     }
 
     public void btCancelarOnClick(View view){
@@ -273,10 +253,29 @@ public class LctoCadastrarActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
-        if (requestCode == 10){
-            if (data != null){
-                int cod = data.getIntExtra("codigo",0);
-               Toast.makeText(this, "SELECIONOU " + cod, Toast.LENGTH_SHORT).show();
+        if (data != null){
+            if (requestCode == ID_COM_LISTAR){
+
+                if (resultCode == 9) {
+
+                    txtCategoria.setText("Categoria");
+                    edtVlr.setTextColor(Color.BLACK);
+
+                }
+                else if (resultCode == 22){
+                    if (data.hasExtra("categoria")) {
+                        Categoria categoria = new Categoria();
+                        categoria = (Categoria) data.getSerializableExtra("categoria");
+                        txtCategoria.setText(categoria.getNome());
+
+                        if (categoria.getTipo().equalsIgnoreCase("Receita")){
+                            edtVlr.setTextColor(Color.BLUE);
+                        }
+                        else {
+                            edtVlr.setTextColor(Color.RED);
+                        }
+                    }
+                }
             }
         }
 

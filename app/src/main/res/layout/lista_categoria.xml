@@ -1,7 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/lvCategorias"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-</ListView>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    tools:context="com.wfrete.wfrete2.activity.CategoriaListarActivity"
+    >
+
+
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/lvCategorias"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            >
+        </ListView>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="bottom" >
+
+        <Button
+            android:id="@+id/btCancelarCategoriaListar"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:text="Cancelar"
+            android:textSize="16dp"
+            android:textColor="#000000"
+            />
+
+
+        <Button
+            android:id="@+id/btNovaCategoriaListar"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:text="Nova Categoria"
+            android:textSize="16dp"
+            android:textColor="#3333FF"
+            />
+    </LinearLayout>
+
+</LinearLayout>

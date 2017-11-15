@@ -39,6 +39,11 @@
             android:name="com.wfrete.wfrete2.activity.CategoriaListarActivity"
             android:label="Lista de Categorias" >
         </activity>
+        <activity
+            android:name="com.wfrete.wfrete2.activity.CategoriaCadastrarActivity"
+            android:label="Cadastro de Categorias" >
+        </activity>
+
     </application>
 
 </manifest>
