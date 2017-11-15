@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.adapter.FreteAdapter;
 import com.wfrete.wfrete2.dao.FreteDAO;
@@ -31,6 +32,7 @@ public class FreteListarActivity extends Fragment {
 
     RecyclerView recyclerViewListaFrete;
     FreteAdapter freteAdapter;
+
 
 
     @Nullable

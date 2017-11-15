@@ -9,40 +9,34 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.adapter.AdapterCategoria;
 import com.wfrete.wfrete2.dao.LctoDAO;
 import com.wfrete.wfrete2.model.Categoria;
 import com.wfrete.wfrete2.model.Lcto;
-import com.wfrete.wfrete2.model.Motorista;
 
 import java.sql.Time;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-
 /**
  * Created by Desenvolvimento 11 on 06/11/2017.
  */
 
-public class LctoCadastrarActivity extends AppCompatActivity {
+public class LctoCadastrarActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
+                                                                        TimePickerDialog.OnTimeSetListener, DialogInterface.OnCancelListener{
 
     private static final int ID_COM_NOVO_REG_INSERIDO = 2;
     private static final int ID_COM_REG_ALTERADO = 5;
@@ -54,6 +48,10 @@ public class LctoCadastrarActivity extends AppCompatActivity {
 
 
     private DecimalFormat df = new DecimalFormat("###.00");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMMM");
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("kk:mm");
+
+    private int ano, mes, dia, hora, minuto;
 
     EditText edtVlr;
     TextView txtData;
@@ -66,6 +64,9 @@ public class LctoCadastrarActivity extends AppCompatActivity {
     Button btSalvar;
 
     ImageView imgCategoria;
+    ImageView imgData;
+    ImageView imgHora;
+
 
     private Lcto lctoEditado = null;
 
@@ -86,7 +87,10 @@ public class LctoCadastrarActivity extends AppCompatActivity {
         btCancelar = (Button) findViewById(R.id.btCancelarLcto);
         btExcluir = (Button) findViewById(R.id.btExcluirLcto);
 
-        imgCategoria = (ImageView) findViewById(R.id.imgBotaoCategoria);
+        imgCategoria = (ImageView) findViewById(R.id.imgBotaoCategoriaLcto);
+        imgData = (ImageView) findViewById(R.id.imgBotaoDataLcto);
+        imgHora = (ImageView) findViewById(R.id.imgBotaoHoraLcto);
+
 
         //tratar o clique para mostrar as categoiras;
         imgCategoria.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +103,32 @@ public class LctoCadastrarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tratarSelecaoCategoria(v);
+            }
+        });
+
+        txtData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tratarSelecaoData(v);
+            }
+        });
+        imgData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tratarSelecaoData(v);
+            }
+        });
+
+        txtHorario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tratarSelecaoHora(v);
+            }
+        });
+        imgHora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tratarSelecaoHora(v);
             }
         });
 
@@ -120,9 +150,68 @@ public class LctoCadastrarActivity extends AppCompatActivity {
             edtVlr.setText("");
             edtObs.setText("");
 
+            iniciarDataHora(true);
+            setStringDateTime();
+
             btExcluir.setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    private void tratarSelecaoData(View v) {
+
+        iniciarDataHora(false);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(ano, mes, dia);
+
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
+                this,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        );
+
+        //definir o intervalo possivel de selecao.
+        Calendar min = Calendar.getInstance();
+        Calendar max = Calendar.getInstance();
+        min.set(max.get(Calendar.YEAR), 0, 1);
+        max.set(max.get(Calendar.YEAR) + 1, 11, 31);
+
+        datePickerDialog.setMinDate(min);
+        datePickerDialog.setMaxDate(max);
+
+        datePickerDialog.setOnCancelListener(this);
+        datePickerDialog.show(getFragmentManager(), "datePickerDialog");
+
+    }
+
+    private void tratarSelecaoHora(View v) {
+
+        iniciarDataHora(false);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(ano, mes, dia, hora, minuto);
+
+        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(
+                this,
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
+        );
+
+        timePickerDialog.setOnCancelListener(this);
+        timePickerDialog.show(getFragmentManager(), "timePickerDialog");
+
+    }
+
+    private void iniciarDataHora( Boolean forcarDataAtual){
+       if ((ano == 0) || (forcarDataAtual)){
+           Calendar calendar = Calendar.getInstance();
+           ano = calendar.get(Calendar.YEAR);
+           mes = calendar.get(Calendar.MONTH);
+           dia = calendar.get(Calendar.DAY_OF_MONTH);
+           hora = calendar.get(Calendar.HOUR_OF_DAY);
+           minuto = calendar.get(Calendar.MINUTE);
+       }
     }
 
     public void tratarSelecaoCategoria(View view){
@@ -248,8 +337,6 @@ public class LctoCadastrarActivity extends AppCompatActivity {
         return Integer.parseInt(sub);
     }
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
@@ -281,4 +368,40 @@ public class LctoCadastrarActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onCancel(DialogInterface dialogInterface) {
+
+        iniciarDataHora(true);
+        setStringDateTime();
+
+    }
+
+    @Override
+    public void onDateSet(com.wdullaer.materialdatetimepicker.date.DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+
+        ano = year;
+        mes = monthOfYear;
+        dia = dayOfMonth;
+
+        setStringDateTime();
+
+    }
+
+    @Override
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+        hora = hourOfDay;
+        minuto = minute;
+
+        setStringDateTime();
+
+    }
+
+    public void setStringDateTime(){
+        String strData = dateFormat.format(new Date(ano, mes, dia, hora, minuto));
+        txtData.setText(strData.replace("-", " de "));
+
+        String srtTime = timeFormat.format(new Date(ano, mes, dia, hora, minuto));
+        txtHorario.setText(srtTime);
+
+    }
 }

@@ -91,21 +91,33 @@
                 android:textSize="18dp"
                 />
 
+
+            <ImageView
+                android:id="@+id/imgBotaoDataLcto"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/ic_botao_drop_down" />
+
             <TextView
                 android:id="@+id/txtHorarioLcto"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:gravity="right"
                 android:layout_alignBottom="@+id/editText3"
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="9dp"
-                android:paddingRight="20dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="15dp"
                 android:text="15:30"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="16dp"
                 />
+
+            <ImageView
+                android:id="@+id/imgBotaoHoraLcto"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/ic_botao_drop_down" />
 
         </LinearLayout>
 
@@ -146,7 +158,7 @@
                 />
 
             <ImageView
-                android:id="@+id/imgBotaoCategoria"
+                android:id="@+id/imgBotaoCategoriaLcto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/ic_botao_drop_down" />
@@ -193,7 +205,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edtObsLcto"
-            android:inputType="textMultiLine"
+            android:inputType="textMultiLine|textAutoComplete|textAutoCorrect"
             android:hint="Nota numero 12331, Posto Guarani"
             />
 
