@@ -31,6 +31,14 @@
             android:name="com.wfrete.wfrete2.activity.FreteCadastrarActivity"
             android:label="@string/nav_bar_fretes" >
         </activity>
+        <activity
+            android:name="com.wfrete.wfrete2.activity.LctoCadastrarActivity"
+            android:label="Lcto do Frete" >
+        </activity>
+        <activity
+            android:name="com.wfrete.wfrete2.activity.CategoriaListarActivity"
+            android:label="Lista de Categorias" >
+        </activity>
     </application>
 
 </manifest>

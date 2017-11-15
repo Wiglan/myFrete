@@ -19,6 +19,7 @@ import android.view.MenuItem;
 
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.activity.FreteListarActivity;
+import com.wfrete.wfrete2.activity.LctoListarActivity;
 import com.wfrete.wfrete2.activity.MotoristaListarActivity;
 import com.wfrete.wfrete2.activity.VeiculoListarActivity;
 import com.wfrete.wfrete2.adapter.MotoristaAdapter;
@@ -109,6 +110,8 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame, new VeiculoListarActivity()).commit();
 
         } else if (id == R.id.nav_slideshow) {
+
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new LctoListarActivity()).commit();
 
         } else if (id == R.id.nav_frete) {
 

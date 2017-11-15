@@ -60,7 +60,6 @@ public class FreteCadastrarActivity extends AppCompatActivity {
     AutoCompleteTextView acVeiculo;
     EditText edtCliente;
 
-
     Button btCancelar;
     Button btSalvar;
     Button btExcluir;
