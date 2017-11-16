@@ -45,7 +45,7 @@ public class LctoDAO {
         cv.put("frete_id", frete_id);
         cv.put("valor", valor);
         cv.put("categoria_id", categoria_id);
-        cv.put("obs", obs);
+        cv.put("observacao", obs);
         cv.put("data", dateFormat.format(data));
         cv.put("hora", hora.getTime());
 

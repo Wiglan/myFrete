@@ -48,6 +48,7 @@ public class LctoListarActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), LctoCadastrarActivity.class);
+                i.putExtra("frete_id", 1);
                 startActivityForResult(i,ID_COMANDO_NOVO_CADASTRO);
             }
         });

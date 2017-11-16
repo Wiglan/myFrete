@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,8 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.adapter.AdapterCategoria;
+import com.wfrete.wfrete2.dao.CategoriaDAO;
+import com.wfrete.wfrete2.dao.FreteDAO;
 import com.wfrete.wfrete2.dao.LctoDAO;
 import com.wfrete.wfrete2.model.Categoria;
 import com.wfrete.wfrete2.model.Lcto;
@@ -44,13 +47,11 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
     private static final int ID_COM_REG_DELETADO = 13;
     private static final int ID_COM_LISTAR = 0;
 
-    private String[] lsCategorias = new String[]{"Categoria", "Combustível", "Peças", "Pneu", "Almoço", "hotel", "Depósitos", "Nova Categoria"};
-
-
     private DecimalFormat df = new DecimalFormat("###.00");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMMM");
     private SimpleDateFormat timeFormat = new SimpleDateFormat("kk:mm");
 
+    private int frete_id = 0;
     private int ano, mes, dia, hora, minuto;
 
     EditText edtVlr;
@@ -91,7 +92,6 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
         imgData = (ImageView) findViewById(R.id.imgBotaoDataLcto);
         imgHora = (ImageView) findViewById(R.id.imgBotaoHoraLcto);
 
-
         //tratar o clique para mostrar as categoiras;
         imgCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +106,7 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
             }
         });
 
+        //mostrar o calendario
         txtData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +120,7 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
             }
         });
 
+        //mostrar o relogio
         txtHorario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,11 +151,12 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
         else {
             edtVlr.setText("");
             edtObs.setText("");
-
             iniciarDataHora(true);
             setStringDateTime();
-
             btExcluir.setVisibility(View.INVISIBLE);
+
+            edtVlr.requestFocus();
+            //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
 
     }
@@ -253,7 +256,6 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
                 .show();
     }
 
-
     public void btSalvarOnClick(View view){
 
         //escontder o teclado.
@@ -267,10 +269,14 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
 
         boolean inserido;
 
-        Date data = new Date();
-        Time hora = null;
+        Date data = new Date(ano, mes, dia, hora, ano);
+        Time hora =  new Time(data.getTime());
 
-        int categoria = 0;
+        int categoria = getIdCategoria(txtCategoria.getText().toString().trim());
+        if (categoria == 0){
+            Toast.makeText(this, "Informe uma categoria válida.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if(lctoEditado != null) {
 
@@ -284,9 +290,7 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
         }
         else {
 
-            inserido = dao.salvar(
-
-                    lctoEditado.getFrete_id(),
+            inserido = dao.salvar(frete_id,
                     Double.parseDouble(edtVlr.getText().toString()),
                     categoria,
                     edtObs.getText().toString(),
@@ -328,13 +332,33 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
             return false;
         }
 
+
+        //Saber o ID do frete
+        Intent intent = getIntent();
+        if(intent.hasExtra("frete_id")) {
+            frete_id = intent.getIntExtra("frete_id", 0);
+        }
+        if (frete_id == 0){
+            Toast.makeText(this, "Frete não identificado.", Toast.LENGTH_SHORT).show();
+            return  false;
+        }
+
+        frete_id = new FreteDAO(this).retornarUltimo().getId();
+
         return true;
     }
 
-    public int getIdAutoCompleteList(String str){
-        int pos = str.indexOf("-");
-        String sub = str.substring(0,pos -1).trim();
-        return Integer.parseInt(sub);
+    public int getIdCategoria(String str){
+
+        Categoria categoria = new CategoriaDAO(this).categoriaByNome(str);
+
+        if (categoria != null){
+            return categoria.getId();
+        }else {
+            return 0;
+        }
+
+
     }
 
     @Override

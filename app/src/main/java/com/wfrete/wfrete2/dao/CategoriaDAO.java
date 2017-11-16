@@ -92,4 +92,25 @@ public class CategoriaDAO {
         }
 
     }
+
+    public Categoria categoriaByNome(String nome){
+
+        Cursor cursor = gw.getDatabase().query(TABLE_CATEGORIAS,null,"UPPER(NOME)=?", new String[] {nome.toUpperCase()},null,null,null, null);
+
+        if(cursor.moveToNext()){
+
+            Categoria categoria = new Categoria();
+            categoria.setId(cursor.getInt(cursor.getColumnIndex("ID")));
+            categoria.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+            categoria.setTipo(cursor.getString(cursor.getColumnIndex("TIPO")));
+            cursor.close();
+            return categoria;
+        }
+        else {
+            return null;
+        }
+
+    }
+
+
 }
