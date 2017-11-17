@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.wfrete.wfrete2.ItemClickListener;
 import com.wfrete.wfrete2.R;
 
 /**
@@ -14,9 +15,7 @@ import com.wfrete.wfrete2.R;
 
 //classe que mapeia os itens do REcicleView
 
-public class FreteHolder extends RecyclerView.ViewHolder {
-
-
+public class FreteHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
     public AppCompatTextView txtNroCte;
     public AppCompatTextView txtVlrTotal;
@@ -26,6 +25,8 @@ public class FreteHolder extends RecyclerView.ViewHolder {
     public AppCompatTextView txtDestino;
     public AppCompatTextView txtCliente;
     public AppCompatTextView txtAlterar;
+
+    private ItemClickListener itemClickListener;
 
     public FreteHolder(View itemView) {
         super(itemView);
@@ -37,8 +38,26 @@ public class FreteHolder extends RecyclerView.ViewHolder {
         txtDestino = (AppCompatTextView) itemView.findViewById(R.id.txtDestinoIF);
         txtCliente = (AppCompatTextView) itemView.findViewById(R.id.txtNomeClienteIF);
         txtAlterar = (AppCompatTextView) itemView.findViewById(R.id.txtAlterarFreteIF);
+
+        itemView.setOnClickListener(this);
+        itemView.setOnLongClickListener(this);
     }
 
+
+    public void setItemClickListener(ItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        itemClickListener.onClick(view, getAdapterPosition(), false);
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        itemClickListener.onClick(view, getAdapterPosition(), true);
+        return true;
+    }
 
 
 }

@@ -13,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.wfrete.wfrete2.ItemClickListener;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.activity.FreteListarActivity;
 import com.wfrete.wfrete2.dao.FreteDAO;
@@ -83,7 +85,6 @@ public class FreteAdapter extends RecyclerView.Adapter<FreteHolder> {
 
         final Frete frete = fretes.get(position);
 
-
         holder.txtAlterar.setOnClickListener(new Button.OnClickListener() {
 
             @Override
@@ -91,6 +92,26 @@ public class FreteAdapter extends RecyclerView.Adapter<FreteHolder> {
 
                 if((context) instanceof FreteListarActivity){
                     ((FreteListarActivity)context).btEditarFreteOnClick(frete);
+                }
+
+            }
+        });
+
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+
+                //if (isLongClick){
+                //    Toast.makeText(view.getContext(),"Clique longo: " +  fretes.get(position).getCliente(), Toast.LENGTH_SHORT).show();
+               // }
+                //else {
+                 //   Toast.makeText(view.getContext(),fretes.get(position).getCliente(), Toast.LENGTH_SHORT).show();
+                //}
+
+                //Toast.makeText(view.getContext(),"Clique longo: " +  fretes.get(position).getCliente(), Toast.LENGTH_SHORT).show();
+
+                if((context) instanceof FreteListarActivity){
+                    ((FreteListarActivity)context).listarLctosFrete(frete);
                 }
 
             }

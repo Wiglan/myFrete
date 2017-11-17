@@ -24,14 +24,12 @@ import com.wfrete.wfrete2.activity.MotoristaListarActivity;
 import com.wfrete.wfrete2.activity.VeiculoListarActivity;
 import com.wfrete.wfrete2.adapter.MotoristaAdapter;
 import com.wfrete.wfrete2.dao.MotoristaDAO;
+import com.wfrete.wfrete2.model.Frete;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
     public int abc;
-
-    RecyclerView recyclerViewCadastros;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +108,9 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame, new VeiculoListarActivity()).commit();
 
         } else if (id == R.id.nav_slideshow) {
-
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new LctoListarActivity()).commit();
+            Frete frete = new Frete();
+            frete.setId(-1);
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new LctoListarActivity(frete)).commit();
 
         } else if (id == R.id.nav_frete) {
 

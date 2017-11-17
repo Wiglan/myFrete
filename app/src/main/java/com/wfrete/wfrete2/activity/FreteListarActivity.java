@@ -1,6 +1,7 @@
 package com.wfrete.wfrete2.activity;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import com.wfrete.wfrete2.R;
@@ -27,12 +29,12 @@ public class FreteListarActivity extends Fragment {
 
     private static final int ID_COMANDO_NOVO_CADASTRO = 1;
     private static final int ID_COMANDO_EDITAR_REG = 7;
+    private static final int ID_COMANDO_LISTAR_LCTOS_FRETE = 19;
     private FloatingActionButton fab;
     View viewFrete;
 
     RecyclerView recyclerViewListaFrete;
     FreteAdapter freteAdapter;
-
 
 
     @Nullable
@@ -59,7 +61,6 @@ public class FreteListarActivity extends Fragment {
 
     }
 
-
     public void btEditarFreteOnClick(Frete frete){
         Intent i = new Intent(getActivity(), FreteCadastrarActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -67,6 +68,10 @@ public class FreteListarActivity extends Fragment {
         startActivityForResult(i,ID_COMANDO_EDITAR_REG);
     }
 
+    public void listarLctosFrete(Frete frete){
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, new LctoListarActivity(frete)).commit();
+    }
 
     private void configurarRecycler(View view) {
         // Configurando o gerenciador de layout para ser uma lista.

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.wfrete.wfrete2.ItemClickListener;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.activity.LctoListarActivity;
 import com.wfrete.wfrete2.holder.LctoHolder;
@@ -28,16 +29,19 @@ import java.util.List;
 //Clase que liga os dados do motorista com o layout item_lista.xml
 public class LctoAdapter extends RecyclerView.Adapter<LctoHolder> {
 
+
     private Fragment context;
     private final List<Lcto> lctos;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private DecimalFormat df = new DecimalFormat("#,###.00");
 
+
     public LctoAdapter(List<Lcto> lctos, Fragment context) {
         this.lctos = lctos;
         this.context = context;
     }
+
 
 
     private Activity getActivity(View view) {
@@ -75,6 +79,8 @@ public class LctoAdapter extends RecyclerView.Adapter<LctoHolder> {
 
             }
         });
+
+
 
 
         /*

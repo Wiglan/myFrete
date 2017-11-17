@@ -1,5 +1,6 @@
 package com.wfrete.wfrete2.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +16,9 @@ import android.view.ViewGroup;
 
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.adapter.LctoAdapter;
+import com.wfrete.wfrete2.dao.FreteDAO;
 import com.wfrete.wfrete2.dao.LctoDAO;
+import com.wfrete.wfrete2.model.Frete;
 import com.wfrete.wfrete2.model.Lcto;
 
 /**
@@ -32,6 +35,12 @@ public class LctoListarActivity extends Fragment {
     RecyclerView recyclerViewListaLcto;
     LctoAdapter lctoAdapter;
 
+    private Frete frete_origem = null;
+
+    @SuppressLint("ValidFragment")
+    public LctoListarActivity(Frete frete) {
+        this.frete_origem = frete;
+    }
 
     @Nullable
     @Override
@@ -48,10 +57,14 @@ public class LctoListarActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), LctoCadastrarActivity.class);
-                i.putExtra("frete_id", 1);
+                i.putExtra("frete_id", frete_origem.getId());
                 startActivityForResult(i,ID_COMANDO_NOVO_CADASTRO);
             }
         });
+
+        if (frete_origem.getId() == -1){
+            frete_origem = new FreteDAO(view.getContext()).retornarUltimo();
+        }
 
         configurarRecycler(view);
 
@@ -74,7 +87,7 @@ public class LctoListarActivity extends Fragment {
 
         // Adiciona o adapter que irá anexar os objetos à lista.
         LctoDAO dao = new LctoDAO(view.getContext());
-        lctoAdapter = new LctoAdapter(dao.ListarLctosByFrete(1), this);
+        lctoAdapter = new LctoAdapter(dao.ListarLctosByFrete(frete_origem.getId()), this);
         recyclerViewListaLcto.setAdapter(lctoAdapter);
         recyclerViewListaLcto.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
 
