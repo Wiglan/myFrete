@@ -17,7 +17,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords|textAutoCorrect|textAutoComplete"
         android:id="@+id/edtNomeMotorista"
         android:hint="Digite o nome do motorista"
         />
@@ -31,7 +31,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text|phone"
+        android:inputType="number"
         android:id="@+id/edtCpfMotorista"
         android:hint="Digite o CPF do motorista"
         />
@@ -45,7 +45,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text|phone"
+        android:inputType="phone"
         android:id="@+id/edtTelefoneMotorista"
         android:hint="Digite o Telefone do motorista"
         />

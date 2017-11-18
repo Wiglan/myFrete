@@ -72,7 +72,6 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
     private Lcto lctoEditado = null;
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,14 +137,37 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
         Intent intent = getIntent();
         if(intent.hasExtra("lcto")){
 
+            btExcluir.setVisibility(View.VISIBLE);
+
             lctoEditado = (Lcto) intent.getSerializableExtra("lcto");
 
             edtVlr.setText(String.valueOf(lctoEditado.getValor()));
+
             edtObs.setText(lctoEditado.getObservacao());
 
-            // TODO: 13/11/2017 Prencher o resto dos campos do lcto.
+            Categoria categoria = new CategoriaDAO(this).categoriaById(lctoEditado.getCategoria_id());
+            txtCategoria.setText(categoria.getNome());
+            if (categoria.getTipo().equalsIgnoreCase("Receita")){
+                edtVlr.setTextColor(Color.BLUE);
+            }
+            else {
+                edtVlr.setTextColor(Color.RED);
+            }
 
-            btExcluir.setVisibility(View.VISIBLE);
+            Date data = lctoEditado.getData();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(data);
+            ano = calendar.get(Calendar.YEAR);
+            mes = calendar.get(Calendar.MONTH);
+            dia = calendar.get(Calendar.DAY_OF_MONTH);
+
+            Time hora1 = lctoEditado.getHora();
+            calendar.setTime(hora1);
+            hora = calendar.get(Calendar.HOUR_OF_DAY);
+            minuto = calendar.get(Calendar.MINUTE);
+
+            setStringDateTime();
+            edtVlr.requestFocus();
 
         }
         else {
@@ -269,7 +291,10 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
 
         boolean inserido;
 
-        Date data = new Date(ano, mes, dia, hora, ano);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(ano, mes, dia, hora, minuto);
+
+        Date data = calendar.getTime();
         Time hora =  new Time(data.getTime());
 
         int categoria = getIdCategoria(txtCategoria.getText().toString().trim());
@@ -332,12 +357,18 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
             return false;
         }
 
-
-        //Saber o ID do frete
+        //Saber o ID do frete, manter a compatibilidade de abrir o lcto sem ser pela consulta de frete.
         Intent intent = getIntent();
         if(intent.hasExtra("frete_id")) {
             frete_id = intent.getIntExtra("frete_id", 0);
         }
+
+
+        //priorizar a abertura pela consulta de frete, sempre que tiver um lcto editado, pega o frete do editado, se nao, pega o frete do intent
+        if(lctoEditado != null) {
+            frete_id = lctoEditado.getFrete_id();
+        }
+
         if (frete_id == 0){
             Toast.makeText(this, "Frete não identificado.", Toast.LENGTH_SHORT).show();
             return  false;

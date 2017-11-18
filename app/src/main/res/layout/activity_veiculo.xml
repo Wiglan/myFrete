@@ -17,9 +17,9 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="textCapSentences|textAutoCorrect|textAutoComplete"
         android:id="@+id/edtNomeVeiculo"
-        android:hint="TORNADO"
+        android:hint="Tornado"
         />
 
     <TextView
@@ -31,9 +31,9 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textCapSentences"
+        android:inputType="textCapSentences|textAutoCorrect|textAutoComplete"
         android:id="@+id/edtModeloVeiculo"
-        android:hint="SCANIA 1113"
+        android:hint="Volvo FH"
         />
 
     <TextView
@@ -45,7 +45,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textCapSentences"
+        android:inputType="textCapCharacters"
         android:id="@+id/edtPlacaVeiculo"
         android:hint="ARK-8167"
         />

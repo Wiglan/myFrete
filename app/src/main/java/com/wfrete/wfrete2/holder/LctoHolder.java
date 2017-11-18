@@ -16,24 +16,44 @@ import com.wfrete.wfrete2.adapter.LctoAdapter;
 
 //classe que mapeia os itens do REcicleView
 
-public class LctoHolder extends RecyclerView.ViewHolder {
+public class LctoHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
-    public TextView nome;
-    public ImageButton btEditar;
-    public ImageButton btExcluir;
+    public TextView txtCategoria;
+    public TextView txtObs;
+    public TextView txtValor;
+    public TextView txtData;
+
+    private ItemClickListener itemClickListener;
 
 
     public LctoHolder(View itemView) {
         super(itemView);
 
-        nome = (TextView) itemView.findViewById(R.id.nomeCliente);
-        btEditar = (ImageButton) itemView.findViewById(R.id.btnEdit);
-        btExcluir = (ImageButton) itemView.findViewById(R.id.btnDelete);
+        txtCategoria = (TextView) itemView.findViewById(R.id.txtCateogiraItem_Lcto);
+        txtData = (TextView) itemView.findViewById(R.id.txtDataItemLcto);
+        txtObs = (TextView) itemView.findViewById(R.id.txtObsItemLcto);
+        txtValor = (TextView) itemView.findViewById(R.id.txtValorItemLcto);
 
-
+        itemView.setOnClickListener(this);
+        itemView.setOnLongClickListener(this);
 
     }
 
+
+    public void setItemClickListener(ItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        itemClickListener.onClick(view, getAdapterPosition(), false);
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        itemClickListener.onClick(view, getAdapterPosition(), true);
+        return true;
+    }
 
 
 }

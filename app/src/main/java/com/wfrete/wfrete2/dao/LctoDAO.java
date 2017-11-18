@@ -63,7 +63,7 @@ public class LctoDAO {
 
     public List<Lcto> ListarLctosByFrete(int frete_id_pesquisa){
         List<Lcto> lctos = new ArrayList<>();
-        Cursor cursor = gw.getDatabase().rawQuery("SELECT * FROM Frete_Lcto WHERE FRETE_ID = " + frete_id_pesquisa + " ORDER BY DATA, HORA DESC", null);
+        Cursor cursor = gw.getDatabase().rawQuery("SELECT * FROM Frete_Lcto WHERE FRETE_ID = " + frete_id_pesquisa + " ORDER BY DATA DESC, HORA DESC", null);
         while(cursor.moveToNext()){
             int id = cursor.getInt(cursor.getColumnIndex("ID"));
             int frete_id = cursor.getInt(cursor.getColumnIndex("FRETE_ID"));

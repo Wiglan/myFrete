@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:id="@+id/edtNro_CteFrete"
-            android:hint="455214"
+            android:hint="12555"
             />
 
 
@@ -164,7 +164,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences|textAutoCorrect|textAutoComplete"
+            android:inputType="textCapWords|textAutoCorrect|textAutoComplete"
             android:id="@+id/edtClienteFrete"
             android:hint="Wiglan Mariani"
             />
