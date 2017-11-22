@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.wfrete.wfrete2.Funcoes;
 import com.wfrete.wfrete2.bd.DbGateway;
 import com.wfrete.wfrete2.model.Motorista;
 
@@ -23,7 +24,6 @@ import java.util.List;
 //Fornece uma interface para que as as camadas de aplicação se comuniquem com o datasource.
 public class MotoristaDAO {
 
-    private SimpleDateFormat dateFormatIntegracao = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     private final String TABLE_MOTORISTAS = "Motoristas";
     private DbGateway gw;
 
@@ -45,7 +45,7 @@ public class MotoristaDAO {
         cv.put("s_id", s_id);
 
         if (s_datahora != null){
-            cv.put("s_datahora", dateFormatIntegracao.format(s_datahora));
+            cv.put("s_datahora", Funcoes.dateFormatIntegracao.format(s_datahora));
         }
         else {
             cv.putNull("s_datahora");
@@ -87,7 +87,7 @@ public class MotoristaDAO {
             try {
                 String dataStr = cursor.getString(cursor.getColumnIndex("S_DATAHORA"));
                 if (dataStr != null){
-                    s_datahora = dateFormatIntegracao.parse(dataStr);
+                    s_datahora = Funcoes.dateFormatIntegracao.parse(dataStr);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -112,7 +112,7 @@ public class MotoristaDAO {
             try {
                 String dataStr = cursor.getString(cursor.getColumnIndex("S_DATAHORA"));
                 if (dataStr != null){
-                    s_datahora = dateFormatIntegracao.parse(dataStr);
+                    s_datahora = Funcoes.dateFormatIntegracao.parse(dataStr);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -141,7 +141,7 @@ public class MotoristaDAO {
             try {
                 String dataStr = cursor.getString(cursor.getColumnIndex("S_DATAHORA"));
                 if (dataStr != null){
-                    s_datahora = dateFormatIntegracao.parse(dataStr);
+                    s_datahora = Funcoes.dateFormatIntegracao.parse(dataStr);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

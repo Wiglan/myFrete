@@ -1,13 +1,11 @@
 package com.wfrete.wfrete2;
 
 import android.app.FragmentManager;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,19 +16,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.wfrete.wfrete2.R;
+import com.wfrete.wfrete2.activity.CategoriaListarActivity;
 import com.wfrete.wfrete2.activity.FreteListarActivity;
-import com.wfrete.wfrete2.activity.LctoListarActivity;
 import com.wfrete.wfrete2.activity.MotoristaListarActivity;
 import com.wfrete.wfrete2.activity.VeiculoListarActivity;
-import com.wfrete.wfrete2.adapter.MotoristaAdapter;
-import com.wfrete.wfrete2.dao.MotoristaDAO;
-import com.wfrete.wfrete2.model.Frete;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public int abc;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +35,10 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         fab.setVisibility(View.INVISIBLE);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -60,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -104,7 +91,17 @@ public class MainActivity extends AppCompatActivity
 
         FragmentManager fragmentManager = getFragmentManager();
 
-        if (id == R.id.nav_motorista) {
+        if (id == R.id.nav_frete) {
+
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new FreteListarActivity()).commit();
+
+        }
+        else if (id == R.id.nav_categorias) {
+
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new CategoriaListarActivity()).commit();
+
+        }
+        else if (id == R.id.nav_motorista) {
 
             fragmentManager.beginTransaction().replace(R.id.content_frame, new MotoristaListarActivity()).commit();
 
@@ -112,23 +109,15 @@ public class MainActivity extends AppCompatActivity
 
             fragmentManager.beginTransaction().replace(R.id.content_frame, new VeiculoListarActivity()).commit();
 
-        } else if (id == R.id.nav_slideshow) {
-            Frete frete = new Frete();
-            frete.setId(-1);
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new LctoListarActivity(frete)).commit();
-
-        } else if (id == R.id.nav_frete) {
-
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new FreteListarActivity()).commit();
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        }
+        else if (id == R.id.nav_sinc_status) {
+        }
+        else if (id == R.id.nav_configuracoes) {
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

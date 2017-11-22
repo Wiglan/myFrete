@@ -10,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +21,6 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wfrete.wfrete2.R;
-import com.wfrete.wfrete2.adapter.AdapterCategoria;
 import com.wfrete.wfrete2.dao.CategoriaDAO;
 import com.wfrete.wfrete2.dao.FreteDAO;
 import com.wfrete.wfrete2.dao.LctoDAO;
@@ -240,7 +238,7 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
     }
 
     public void tratarSelecaoCategoria(View view){
-        Intent i = new Intent(this, CategoriaListarActivity.class);
+        Intent i = new Intent(this, CategoriaListarNoLctoActivity.class);
         i.putExtra("categoria", txtCategoria.getText().toString());
         startActivityForResult(i,ID_COM_LISTAR);
     }

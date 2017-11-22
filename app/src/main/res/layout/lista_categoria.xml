@@ -1,51 +1,38 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#ffffff"
-    android:orientation="vertical"
-    tools:context="com.wfrete.wfrete2.activity.CategoriaListarActivity"
-    >
+    tools:context="com.wfrete.wfrete2.activity.CategoriaListarActivity">
 
 
-        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/lvCategorias"
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            >
-        </ListView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvListaCategorias"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:listitem="@layout/item_lista" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabCategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="12dp"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="bottom" >
-
-        <Button
-            android:id="@+id/btCancelarCategoriaListar"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:text="Cancelar"
-            android:textSize="16dp"
-            android:textColor="#000000"
-            />
-
-
-        <Button
-            android:id="@+id/btNovaCategoriaListar"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:text="Nova Categoria"
-            android:textSize="16dp"
-            android:textColor="#3333FF"
-            />
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -45,7 +45,7 @@
             android:label="Lcto do Frete" >
         </activity>
         <activity
-            android:name="com.wfrete.wfrete2.activity.CategoriaListarActivity"
+            android:name="com.wfrete.wfrete2.activity.CategoriaListarNoLctoActivity"
             android:label="Lista de Categorias" >
         </activity>
         <activity

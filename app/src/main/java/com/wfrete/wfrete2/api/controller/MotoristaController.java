@@ -1,19 +1,16 @@
 package com.wfrete.wfrete2.api.controller;
 
 import android.content.Context;
-import android.nfc.Tag;
-import android.util.Log;
-import android.widget.Toast;
 
+import com.wfrete.wfrete2.Funcoes;
+import com.wfrete.wfrete2.MainActivity;
 import com.wfrete.wfrete2.api.ServiceGenerator;
-import com.wfrete.wfrete2.api.Validador;
 import com.wfrete.wfrete2.api.service.MotoristaService;
 import com.wfrete.wfrete2.dao.MotoristaDAO;
 import com.wfrete.wfrete2.model.Motorista;
 import com.wfrete.wfrete2.model.RetornoIntegracao;
 
 import retrofit2.Call;
-import retrofit2.Response;
 
 /**
  * Created by Desenvolvimento 11 on 19/11/2017.
@@ -26,7 +23,7 @@ public class MotoristaController {
         int localizadorMotoristaWS = 0;
         int idLocalMotorista = motorista.getId();
 
-        if (Validador.internetAtiva(context)){
+        if (Funcoes.internetAtiva(context)){
 
             try {
                 MotoristaService motoristaService = ServiceGenerator.createService(MotoristaService.class, "TOKEN");
@@ -36,7 +33,7 @@ public class MotoristaController {
 
                 //novo motorista
                 if (motorista.getS_id() <= 0){
-                    localizadorMotoristaWS = Validador.getRandomInt() * -1;
+                    localizadorMotoristaWS = Funcoes.getRandomInt() * -1;
                     motorista.setS_id(localizadorMotoristaWS);
 
                     call = motoristaService.save(motorista);

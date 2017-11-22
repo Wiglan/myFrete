@@ -106,28 +106,34 @@ public class CategoriaCadastrarActivity extends AppCompatActivity {
 
             inserido = dao.salvar(categoriaEditada.getId(),
                                   edtNome.getText().toString(),
-                                  tipo);
+                                  tipo,  categoriaEditada.getS_id(),
+                    null);
 
         }
         else {
 
             inserido = dao.salvar(edtNome.getText().toString(),
-                                  tipo);
+                                  tipo, 0, null);
         }
 
         if (inserido) {
 
+            Categoria categoria;
+
             if(categoriaEditada != null) {
-                Categoria categoria = dao.categoriaById(categoriaEditada.getId());
+                categoria = dao.categoriaById(categoriaEditada.getId());
                 Intent intent = getIntent();
                 intent.putExtra("categoria", categoria);
                 setResult(ID_COM_REG_ALTERADO,intent);
             }else {
-                Categoria categoria = dao.retornarUltimo();
+                categoria = dao.retornarUltimo();
                 Intent intent = getIntent();
                 intent.putExtra("categoria", categoria);
                 setResult(ID_COM_NOVO_REG_INSERIDO,intent);
             }
+
+
+            //CategoriaController.wsSalvarMotorista(this, categoriaWS);
 
             finish();
 

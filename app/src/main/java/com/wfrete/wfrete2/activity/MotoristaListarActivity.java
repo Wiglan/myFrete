@@ -49,9 +49,6 @@ import retrofit2.Call;
 
 public class MotoristaListarActivity extends Fragment {
 
-
-
-
     private static final int ID_COMANDO_NOVO_CADASTRO = 1;
     private static final int ID_COMANDO_EDITAR_REG = 7;
     private FloatingActionButton fab;

@@ -1,7 +1,6 @@
 package com.wfrete.wfrete2.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +16,12 @@ import java.util.List;
  * Created by Desenvolvimento 11 on 14/11/2017.
  */
 
-public class AdapterCategoria extends BaseAdapter {
+public class CategoriaNoLctoAdapter extends BaseAdapter {
 
     private final List<Categoria> categorias;
     private Activity act;
 
-    public AdapterCategoria(Activity act, List<Categoria> categorias) {
+    public CategoriaNoLctoAdapter(Activity act, List<Categoria> categorias) {
         this.act = act;
         this.categorias = categorias;
     }
@@ -45,7 +44,7 @@ public class AdapterCategoria extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View view = act.getLayoutInflater().inflate(R.layout.item_categoria, parent, false);
+        View view = act.getLayoutInflater().inflate(R.layout.item_categoria_no_lcto, parent, false);
         Categoria categoria = categorias.get(position);
 
         TextView txtNome = (TextView) view.findViewById(R.id.txtItem_categoria_nome);
