@@ -1,9 +1,13 @@
 package com.wfrete.wfrete2.activity;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,18 +20,37 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.MainActivity;
 import com.wfrete.wfrete2.adapter.MotoristaAdapter;
+import com.wfrete.wfrete2.api.ServiceGenerator;
+import com.wfrete.wfrete2.api.service.MotoristaService;
 import com.wfrete.wfrete2.dao.MotoristaDAO;
 import com.wfrete.wfrete2.model.Motorista;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.Normalizer;
+import java.util.List;
+
+import retrofit2.Call;
 
 /**
  * Created by Desenvolvimento 11 on 06/11/2017.
  */
 
 public class MotoristaListarActivity extends Fragment {
+
+
+
 
     private static final int ID_COMANDO_NOVO_CADASTRO = 1;
     private static final int ID_COMANDO_EDITAR_REG = 7;
@@ -48,6 +71,9 @@ public class MotoristaListarActivity extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         fab = (FloatingActionButton) view.findViewById(R.id.fabMotorista);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,12 +88,13 @@ public class MotoristaListarActivity extends Fragment {
 
     }
 
-
     public void btEditarMotoristaOnClick(Motorista motorista){
+
         Intent i = new Intent(getActivity(), MotoristaCadastrarActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         i.putExtra("motorista", motorista);
         startActivityForResult(i,ID_COMANDO_EDITAR_REG);
+
     }
 
 

@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.adapter.MotoristaAdapter;
+import com.wfrete.wfrete2.api.controller.MotoristaController;
 import com.wfrete.wfrete2.dao.MotoristaDAO;
 import com.wfrete.wfrete2.model.Motorista;
 
@@ -87,29 +88,36 @@ public class MotoristaCadastrarActivity extends AppCompatActivity {
             inserido = dao.salvar(motoristaEditado.getId(),
                                   edtNome.getText().toString(),
                                   edtCpf.getText().toString(),
-                                  edtTelefone.getText().toString());
+                                  edtTelefone.getText().toString(),
+                                    motoristaEditado.getS_id(),
+                                    null);
 
         }
         else {
 
             inserido = dao.salvar(edtNome.getText().toString(),
                                   edtCpf.getText().toString(),
-                                  edtTelefone.getText().toString());
+                                  edtTelefone.getText().toString(), 0, null);
         }
 
         if (inserido) {
 
+            Motorista motorista;
             if(motoristaEditado != null) {
-                Motorista motorista = dao.motoristaById(motoristaEditado.getId());
+                motorista = dao.motoristaById(motoristaEditado.getId());
                 Intent intent = getIntent();
                 intent.putExtra("motorista", motorista);
                 setResult(ID_COM_REG_ALTERADO,intent);
             }else {
-                Motorista motorista = dao.retornarUltimo();
+                motorista = dao.retornarUltimo();
                 Intent intent = getIntent();
                 intent.putExtra("motorista", motorista);
                 setResult(ID_COM_NOVO_REG_INSERIDO,intent);
             }
+
+
+            //no salvar acima, sempre seta a data de integracao como nulla, ai se deu pra comunicar com o servidor, atualiza a data abaixo.
+            MotoristaController.wsSalvarMotorista(this, motorista);
 
             finish();
 

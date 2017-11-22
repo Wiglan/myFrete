@@ -13,13 +13,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.adapter.LctoAdapter;
+import com.wfrete.wfrete2.api.ServiceGenerator;
+import com.wfrete.wfrete2.api.service.CategoriaService;
 import com.wfrete.wfrete2.dao.FreteDAO;
 import com.wfrete.wfrete2.dao.LctoDAO;
 import com.wfrete.wfrete2.model.Frete;
 import com.wfrete.wfrete2.model.Lcto;
+
+import retrofit2.Call;
 
 /**
  * Created by Desenvolvimento 11 on 06/11/2017.
@@ -72,10 +77,12 @@ public class LctoListarActivity extends Fragment {
 
 
     public void btEditarLctoOnClick(Lcto lcto){
+
         Intent i = new Intent(getActivity(), LctoCadastrarActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         i.putExtra("lcto", lcto);
         startActivityForResult(i,ID_COMANDO_EDITAR_REG);
+
     }
 
 

@@ -17,8 +17,6 @@ public class Lcto implements Serializable {
     private String observacao;
     private Date data;
     private Time hora;
-
-
     public Lcto() {
     }
 

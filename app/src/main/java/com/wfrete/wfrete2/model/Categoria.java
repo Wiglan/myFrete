@@ -12,7 +12,6 @@ public class Categoria implements Serializable {
     private String nome;
     private String tipo;
 
-
     public Categoria(){
     }
 
