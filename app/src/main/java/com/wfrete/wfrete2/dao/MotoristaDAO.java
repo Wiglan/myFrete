@@ -80,7 +80,9 @@ public class MotoristaDAO {
             String nome = cursor.getString(cursor.getColumnIndex("NOME"));
             String cpf = cursor.getString(cursor.getColumnIndex("CPF"));
             String telefone = cursor.getString(cursor.getColumnIndex("TELEFONE"));
+
             int s_id = cursor.getInt(cursor.getColumnIndex("S_ID"));
+
             Date s_datahora = null;
             try {
                 String dataStr = cursor.getString(cursor.getColumnIndex("S_DATAHORA"));
@@ -90,6 +92,7 @@ public class MotoristaDAO {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
             motoristas.add(new Motorista(id, nome, cpf, telefone, s_id, s_datahora));
         }
         cursor.close();
@@ -133,7 +136,6 @@ public class MotoristaDAO {
             motorista.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
             motorista.setCpf(cursor.getString(cursor.getColumnIndex("CPF")));
             motorista.setTelefone(cursor.getString(cursor.getColumnIndex("TELEFONE")));
-            motorista.setId(cursor.getInt(cursor.getColumnIndex("S_ID")));
             motorista.setS_id(cursor.getInt(cursor.getColumnIndex("S_ID")));
             Date s_datahora = null;
             try {

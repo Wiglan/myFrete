@@ -1,6 +1,8 @@
 package com.wfrete.wfrete2.api.controller;
 
 import android.content.Context;
+import android.nfc.Tag;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.wfrete.wfrete2.api.ServiceGenerator;
@@ -22,6 +24,7 @@ public class MotoristaController {
     public static void wsSalvarMotorista(Context context,  Motorista motorista){
 
         int localizadorMotoristaWS = 0;
+        int idLocalMotorista = motorista.getId();
 
         if (Validador.internetAtiva(context)){
 
@@ -42,6 +45,7 @@ public class MotoristaController {
                 //se ja tem um id, ja foi integrado, entao edita o registro.
                 else {
 
+                    //muda o id local pelo id do servidor para chamar a edicao la
                     motorista.setId(motorista.getS_id());
                     call = motoristaService.update(motorista);
 
@@ -53,7 +57,7 @@ public class MotoristaController {
                 MotoristaDAO dao = new MotoristaDAO(context);
 
                 if (retornoIntegracao.getDthr_integracao() != null){
-                    dao.salvar_dados_integracao(motorista.getId(),
+                    dao.salvar_dados_integracao(idLocalMotorista,
                             retornoIntegracao.getId_gerado(), retornoIntegracao.getDthr_integracao());
                 }
 

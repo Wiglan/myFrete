@@ -20,7 +20,7 @@ public interface MotoristaService {
     Call<List<Motorista>> getAll();
 
     @GET("/motorista/{id}")
-    Call<Motorista> getOne(@Path("id") Long id);
+    Call<Motorista> getOne(@Path("id") Integer id);
 
     @POST("/motorista/")
     Call<RetornoIntegracao> save(@Body Motorista motorista);
@@ -29,5 +29,5 @@ public interface MotoristaService {
     Call<RetornoIntegracao> update(@Body Motorista motorista);
 
     @DELETE("/motorista/{id}")
-    Call<Void> delete(@Path("id") Long id);
+    Call<Void> delete(@Path("id") Integer id);
 }

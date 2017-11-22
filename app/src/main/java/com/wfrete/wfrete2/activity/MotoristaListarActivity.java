@@ -112,6 +112,7 @@ public class MotoristaListarActivity extends Fragment {
 
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -122,8 +123,8 @@ public class MotoristaListarActivity extends Fragment {
                 if (resultCode == 2) {
 
                     if (data.hasExtra("motorista")) {
-                        Motorista motorista = new Motorista();
-                        motorista = (Motorista) data.getSerializableExtra("motorista");
+                        Motorista motorista = (Motorista) data.getSerializableExtra("motorista");
+                        motorista = new MotoristaDAO(getView().getContext()).motoristaById(motorista.getId()); //buscar do banco, por que pode ter alterado dados pelo webservice.
                         motoristaAdapter.adicionarMotorista(motorista);
 
                         Snackbar.make(getView(), "Motorista salvo com sucesso!", Snackbar.LENGTH_LONG)
@@ -137,8 +138,8 @@ public class MotoristaListarActivity extends Fragment {
                 if (resultCode == 5) {
 
                     if (data.hasExtra("motorista")) {
-                        Motorista motorista = new Motorista();
-                        motorista = (Motorista) data.getSerializableExtra("motorista");
+                        Motorista motorista = (Motorista) data.getSerializableExtra("motorista");
+                        motorista = new MotoristaDAO(getView().getContext()).motoristaById(motorista.getId()); //buscar do banco, por que pode ter alterado dados pelo webservice.
                         motoristaAdapter.atualizarMotorista(motorista);
 
                         Snackbar.make(getView(), "Motorista salvo com sucesso!", Snackbar.LENGTH_LONG)

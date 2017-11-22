@@ -103,6 +103,7 @@ public class MotoristaCadastrarActivity extends AppCompatActivity {
         if (inserido) {
 
             Motorista motorista;
+
             if(motoristaEditado != null) {
                 motorista = dao.motoristaById(motoristaEditado.getId());
                 Intent intent = getIntent();
@@ -115,9 +116,9 @@ public class MotoristaCadastrarActivity extends AppCompatActivity {
                 setResult(ID_COM_NOVO_REG_INSERIDO,intent);
             }
 
-
+            Motorista motoristaWS = new Motorista(motorista.getId(), motorista.getNome(), motorista.getCpf(), motorista.getTelefone(), motorista.getS_id(), motorista.getS_datahora());
             //no salvar acima, sempre seta a data de integracao como nulla, ai se deu pra comunicar com o servidor, atualiza a data abaixo.
-            MotoristaController.wsSalvarMotorista(this, motorista);
+            MotoristaController.wsSalvarMotorista(this, motoristaWS);
 
             finish();
 
