@@ -17,6 +17,7 @@ import com.wfrete.wfrete2.adapter.MotoristaAdapter;
 import com.wfrete.wfrete2.api.controller.MotoristaController;
 import com.wfrete.wfrete2.dao.MotoristaDAO;
 import com.wfrete.wfrete2.model.Motorista;
+import com.wfrete.wfrete2.util.Constantes;
 
 /**
  * Created by Desenvolvimento 11 on 06/11/2017.
@@ -24,9 +25,6 @@ import com.wfrete.wfrete2.model.Motorista;
 
 public class MotoristaCadastrarActivity extends AppCompatActivity {
 
-    private static final int ID_COM_NOVO_REG_INSERIDO = 2;
-    private static final int ID_COM_REG_ALTERADO = 5;
-    private static final int ID_COM_CANCELADO = 9;
 
     EditText edtNome;
     EditText edtCpf;
@@ -74,7 +72,7 @@ public class MotoristaCadastrarActivity extends AppCompatActivity {
 
     public void btCancelarOnClick(View view){
         Intent intent = getIntent();
-        setResult(ID_COM_CANCELADO,intent);
+        setResult(Constantes.ID_COM_CANCELADO,intent);
         finish();
     }
 
@@ -112,12 +110,12 @@ public class MotoristaCadastrarActivity extends AppCompatActivity {
                 motorista = dao.motoristaById(motoristaEditado.getId());
                 Intent intent = getIntent();
                 intent.putExtra("motorista", motorista);
-                setResult(ID_COM_REG_ALTERADO,intent);
+                setResult(Constantes.ID_COM_REG_ALTERADO,intent);
             }else {
                 motorista = dao.retornarUltimo();
                 Intent intent = getIntent();
                 intent.putExtra("motorista", motorista);
-                setResult(ID_COM_NOVO_REG_INSERIDO,intent);
+                setResult(Constantes.ID_COM_NOVO_REG_INSERIDO,intent);
             }
 
             Motorista motoristaWS = new Motorista(motorista.getId(), motorista.getNome(), motorista.getCpf(), motorista.getTelefone(), motorista.getS_id(), motorista.getS_datahora());

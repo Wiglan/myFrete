@@ -2,8 +2,7 @@ package com.wfrete.wfrete2.api.controller;
 
 import android.content.Context;
 
-import com.wfrete.wfrete2.Funcoes;
-import com.wfrete.wfrete2.MainActivity;
+import com.wfrete.wfrete2.util.Funcoes;
 import com.wfrete.wfrete2.api.ServiceGenerator;
 import com.wfrete.wfrete2.api.service.MotoristaService;
 import com.wfrete.wfrete2.dao.MotoristaDAO;

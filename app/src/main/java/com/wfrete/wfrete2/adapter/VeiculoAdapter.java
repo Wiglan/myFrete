@@ -1,10 +1,7 @@
 package com.wfrete.wfrete2.adapter;
 
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
@@ -15,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.wfrete.wfrete2.Funcoes;
+import com.wfrete.wfrete2.util.Funcoes;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.activity.VeiculoListarActivity;
 import com.wfrete.wfrete2.dao.VeiculoDAO;

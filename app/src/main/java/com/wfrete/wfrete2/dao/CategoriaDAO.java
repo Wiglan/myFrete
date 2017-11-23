@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.wfrete.wfrete2.Funcoes;
+import com.wfrete.wfrete2.util.Funcoes;
 import com.wfrete.wfrete2.bd.DbGateway;
 import com.wfrete.wfrete2.model.Categoria;
 

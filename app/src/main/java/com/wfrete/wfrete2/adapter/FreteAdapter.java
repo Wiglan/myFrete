@@ -5,25 +5,19 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.DialogInterface;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.wfrete.wfrete2.ItemClickListener;
+import com.wfrete.wfrete2.util.ItemClickListener;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.activity.FreteListarActivity;
-import com.wfrete.wfrete2.dao.FreteDAO;
 import com.wfrete.wfrete2.holder.FreteHolder;
 import com.wfrete.wfrete2.model.Frete;
 
 import java.text.DecimalFormat;
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.List;
 

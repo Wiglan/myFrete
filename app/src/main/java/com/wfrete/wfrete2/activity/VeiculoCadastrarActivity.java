@@ -16,16 +16,13 @@ import com.wfrete.wfrete2.api.controller.VeiculoController;
 import com.wfrete.wfrete2.dao.VeiculoDAO;
 import com.wfrete.wfrete2.model.Veiculo;
 import com.wfrete.wfrete2.model.Veiculo;
+import com.wfrete.wfrete2.util.Constantes;
 
 /**
  * Created by Desenvolvimento 11 on 06/11/2017.
  */
 
 public class VeiculoCadastrarActivity extends AppCompatActivity {
-
-    private static final int ID_COM_NOVO_REG_INSERIDO = 2;
-    private static final int ID_COM_REG_ALTERADO = 5;
-    private static final int ID_COM_CANCELADO = 9;
 
     EditText edtNome;
     EditText edtModelo;
@@ -77,7 +74,7 @@ public class VeiculoCadastrarActivity extends AppCompatActivity {
 
     public void btCancelarOnClick(View view){
         Intent intent = getIntent();
-        setResult(ID_COM_CANCELADO,intent);
+        setResult(Constantes.ID_COM_CANCELADO,intent);
         finish();
     }
 
@@ -118,12 +115,12 @@ public class VeiculoCadastrarActivity extends AppCompatActivity {
                 veiculo = dao.veiculoById(veiculoEditado.getId());
                 Intent intent = getIntent();
                 intent.putExtra("veiculo", veiculo);
-                setResult(ID_COM_REG_ALTERADO,intent);
+                setResult(Constantes.ID_COM_REG_ALTERADO,intent);
             }else {
                 veiculo = dao.retornarUltimo();
                 Intent intent = getIntent();
                 intent.putExtra("veiculo", veiculo);
-                setResult(ID_COM_NOVO_REG_INSERIDO,intent);
+                setResult(Constantes.ID_COM_NOVO_REG_INSERIDO,intent);
             }
 
             Veiculo veiculoWS = new Veiculo(veiculo.getId(),veiculo.getNome(), veiculo.getModelo(),veiculo.getPlaca(), veiculo.getAno(), veiculo.getS_id(), veiculo.getS_datahora());

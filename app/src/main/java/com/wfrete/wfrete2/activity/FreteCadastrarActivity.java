@@ -25,6 +25,7 @@ import com.wfrete.wfrete2.dao.VeiculoDAO;
 import com.wfrete.wfrete2.model.Frete;
 import com.wfrete.wfrete2.model.Motorista;
 import com.wfrete.wfrete2.model.Veiculo;
+import com.wfrete.wfrete2.util.Constantes;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -37,10 +38,6 @@ import java.util.List;
 
 public class FreteCadastrarActivity extends AppCompatActivity {
 
-    private static final int ID_COM_NOVO_REG_INSERIDO = 2;
-    private static final int ID_COM_REG_ALTERADO = 5;
-    private static final int ID_COM_CANCELADO = 9;
-    private static final int ID_COM_REG_DELETADO = 13;
 
 
     private DecimalFormat df = new DecimalFormat("###.00");
@@ -151,7 +148,7 @@ public class FreteCadastrarActivity extends AppCompatActivity {
 
     public void btCancelarOnClick(View view){
         Intent intent = getIntent();
-        setResult(ID_COM_CANCELADO,intent);
+        setResult(Constantes.ID_COM_CANCELADO,intent);
         finish();
     }
 
@@ -168,7 +165,7 @@ public class FreteCadastrarActivity extends AppCompatActivity {
                         if (sucesso) {
                             Intent intent = getIntent();
                             intent.putExtra("frete", freteEditado);
-                            setResult(ID_COM_REG_DELETADO,intent);
+                            setResult(Constantes.ID_COM_REG_DELETADO,intent);
                             finish();
                         } else {
 
@@ -259,12 +256,12 @@ public class FreteCadastrarActivity extends AppCompatActivity {
                 Frete frete = dao.freteById(freteEditado.getId());
                 Intent intent = getIntent();
                 intent.putExtra("frete", frete);
-                setResult(ID_COM_REG_ALTERADO,intent);
+                setResult(Constantes.ID_COM_REG_ALTERADO,intent);
             }else {
                 Frete frete = dao.retornarUltimo();
                 Intent intent = getIntent();
                 intent.putExtra("frete", frete);
-                setResult(ID_COM_NOVO_REG_INSERIDO,intent);
+                setResult(Constantes.ID_COM_NOVO_REG_INSERIDO,intent);
             }
 
             finish();

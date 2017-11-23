@@ -1,4 +1,4 @@
-package com.wfrete.wfrete2;
+package com.wfrete.wfrete2.util;
 
 
 import android.content.Context;
@@ -15,8 +15,8 @@ import java.util.Random;
 public class Funcoes {
 
     public static SimpleDateFormat dateFormatIntegracao;
-    private static SimpleDateFormat timeFormat;
 
+    private static SimpleDateFormat timeFormat;
 
     static {
         dateFormatIntegracao = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");

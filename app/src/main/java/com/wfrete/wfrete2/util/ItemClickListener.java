@@ -1,4 +1,4 @@
-package com.wfrete.wfrete2;
+package com.wfrete.wfrete2.util;
 
 import android.view.View;
 

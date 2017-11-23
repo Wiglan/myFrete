@@ -10,9 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.wfrete.wfrete2.ItemClickListener;
+import com.wfrete.wfrete2.util.ItemClickListener;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.activity.LctoListarActivity;
 import com.wfrete.wfrete2.dao.CategoriaDAO;

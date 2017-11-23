@@ -21,6 +21,7 @@ import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.adapter.FreteAdapter;
 import com.wfrete.wfrete2.dao.FreteDAO;
 import com.wfrete.wfrete2.model.Frete;
+import com.wfrete.wfrete2.util.Constantes;
 
 /**
  * Created by Desenvolvimento 11 on 06/11/2017.
@@ -28,9 +29,6 @@ import com.wfrete.wfrete2.model.Frete;
 
 public class FreteListarActivity extends Fragment {
 
-    private static final int ID_COMANDO_NOVO_CADASTRO = 1;
-    private static final int ID_COMANDO_EDITAR_REG = 7;
-    private static final int ID_COMANDO_LISTAR_LCTOS_FRETE = 19;
     private FloatingActionButton fab;
     View viewFrete;
 
@@ -53,7 +51,7 @@ public class FreteListarActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), FreteCadastrarActivity.class);
-                startActivityForResult(i,ID_COMANDO_NOVO_CADASTRO);
+                startActivityForResult(i, Constantes.ID_COMANDO_NOVO_CADASTRO);
             }
         });
 
@@ -69,7 +67,7 @@ public class FreteListarActivity extends Fragment {
         Intent i = new Intent(getActivity(), FreteCadastrarActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         i.putExtra("frete", frete);
-        startActivityForResult(i,ID_COMANDO_EDITAR_REG);
+        startActivityForResult(i,Constantes.ID_COMANDO_EDITAR_REG);
     }
 
     public void listarLctosFrete(Frete frete){
@@ -95,7 +93,7 @@ public class FreteListarActivity extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (data != null){
-            if (requestCode == ID_COMANDO_NOVO_CADASTRO){
+            if (requestCode == Constantes.ID_COMANDO_NOVO_CADASTRO){
 
                 //retornou com um novo frete cadastrado.
                 if (resultCode == 2) {
@@ -110,7 +108,7 @@ public class FreteListarActivity extends Fragment {
 
                     }
                 }
-            }else if (requestCode == ID_COMANDO_EDITAR_REG){
+            }else if (requestCode == Constantes.ID_COMANDO_EDITAR_REG){
 
                 //retornou com um frete alterado.
                 if (resultCode == 5) {

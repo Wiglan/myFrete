@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.wfrete.wfrete2.util.Constantes;
+import com.wfrete.wfrete2.util.Funcoes;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.api.controller.CategoriaController;
 import com.wfrete.wfrete2.dao.CategoriaDAO;
@@ -24,10 +26,6 @@ import com.wfrete.wfrete2.model.Categoria;
  */
 
 public class CategoriaCadastrarActivity extends AppCompatActivity {
-
-    private static final int ID_COM_NOVO_REG_INSERIDO = 2;
-    private static final int ID_COM_REG_ALTERADO = 5;
-    private static final int ID_COM_CANCELADO = 9;
 
     EditText edtNome;
     private RadioButton rbReceita;
@@ -84,7 +82,7 @@ public class CategoriaCadastrarActivity extends AppCompatActivity {
 
     public void btCancelarOnClick(View view){
         Intent intent = getIntent();
-        setResult(ID_COM_CANCELADO,intent);
+        setResult(Constantes.ID_COM_CANCELADO,intent);
         finish();
     }
 
@@ -131,12 +129,12 @@ public class CategoriaCadastrarActivity extends AppCompatActivity {
                 categoria = dao.categoriaById(categoriaEditada.getId());
                 Intent intent = getIntent();
                 intent.putExtra("categoria", categoria);
-                setResult(ID_COM_REG_ALTERADO,intent);
+                setResult(Constantes.ID_COM_REG_ALTERADO,intent);
             }else {
                 categoria = dao.retornarUltimo();
                 Intent intent = getIntent();
                 intent.putExtra("categoria", categoria);
-                setResult(ID_COM_NOVO_REG_INSERIDO,intent);
+                setResult(Constantes.ID_COM_NOVO_REG_INSERIDO,intent);
             }
 
             Categoria categoriaWS = new Categoria(categoria.getId(), categoria.getNome(), categoria.getTipo(), categoria.getS_id(), categoria.getS_datahora());

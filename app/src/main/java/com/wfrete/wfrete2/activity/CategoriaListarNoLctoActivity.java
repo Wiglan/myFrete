@@ -13,6 +13,7 @@ import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.adapter.CategoriaNoLctoAdapter;
 import com.wfrete.wfrete2.dao.CategoriaDAO;
 import com.wfrete.wfrete2.model.Categoria;
+import com.wfrete.wfrete2.util.Constantes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +24,6 @@ import java.util.List;
 
 public class CategoriaListarNoLctoActivity extends AppCompatActivity{
 
-
-
-    private static final int ID_COM_CANCELADO = 9;
-    private static final int ID_COM_CADASTRAR_NOVO = 1;
-    private static final int ID_COM_REG_SELECIONADO = 22;
 
 
     private Button btCancelar;
@@ -60,7 +56,7 @@ public class CategoriaListarNoLctoActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), CategoriaCadastrarActivity.class);
-                startActivityForResult(i,ID_COM_CADASTRAR_NOVO);
+                startActivityForResult(i,Constantes.ID_COM_CADASTRAR_NOVO);
             }
         });
 
@@ -69,7 +65,7 @@ public class CategoriaListarNoLctoActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent i = getIntent();
-                setResult(ID_COM_CANCELADO, i);
+                setResult(Constantes.ID_COM_CANCELADO, i);
                 finish();
             }
         });
@@ -81,7 +77,7 @@ public class CategoriaListarNoLctoActivity extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = getIntent();
                 i.putExtra("categoria", categorias.get(position));
-                setResult(ID_COM_REG_SELECIONADO, i);
+                setResult(Constantes.ID_COM_REG_SELECIONADO, i);
                 finish();
             }
         });
@@ -99,7 +95,7 @@ public class CategoriaListarNoLctoActivity extends AppCompatActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
         if (data != null){
-            if (requestCode == ID_COM_CADASTRAR_NOVO){
+            if (requestCode == Constantes.ID_COM_CADASTRAR_NOVO){
 
                 //inseriu uma nova categoria
                 if (resultCode == 2){

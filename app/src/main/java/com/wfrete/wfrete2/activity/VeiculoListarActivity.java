@@ -18,6 +18,7 @@ import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.adapter.VeiculoAdapter;
 import com.wfrete.wfrete2.dao.VeiculoDAO;
 import com.wfrete.wfrete2.model.Veiculo;
+import com.wfrete.wfrete2.util.Constantes;
 
 /**
  * Created by Desenvolvimento 11 on 06/11/2017.
@@ -25,8 +26,6 @@ import com.wfrete.wfrete2.model.Veiculo;
 
 public class VeiculoListarActivity extends Fragment {
 
-    private static final int ID_COMANDO_NOVO_CADASTRO = 1;
-    private static final int ID_COMANDO_EDITAR_REG = 7;
     private FloatingActionButton fab;
     View viewVeiculo;
 
@@ -53,7 +52,7 @@ public class VeiculoListarActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), VeiculoCadastrarActivity.class);
-                startActivityForResult(i,ID_COMANDO_NOVO_CADASTRO);
+                startActivityForResult(i, Constantes.ID_COMANDO_NOVO_CADASTRO);
             }
         });
 
@@ -66,7 +65,7 @@ public class VeiculoListarActivity extends Fragment {
         Intent i = new Intent(getActivity(), VeiculoCadastrarActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         i.putExtra("veiculo", veiculo);
-        startActivityForResult(i,ID_COMANDO_EDITAR_REG);
+        startActivityForResult(i,Constantes.ID_COMANDO_EDITAR_REG);
     }
 
 
@@ -88,7 +87,7 @@ public class VeiculoListarActivity extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (data != null){
-            if (requestCode == ID_COMANDO_NOVO_CADASTRO){
+            if (requestCode == Constantes.ID_COMANDO_NOVO_CADASTRO){
 
                 //retornou com um novo veiculo cadastrado.
                 if (resultCode == 2) {
@@ -103,7 +102,7 @@ public class VeiculoListarActivity extends Fragment {
 
                     }
                 }
-            }else if (requestCode == ID_COMANDO_EDITAR_REG){
+            }else if (requestCode == Constantes.ID_COMANDO_EDITAR_REG){
 
                 //retornou com um veiculo alterado.
                 if (resultCode == 5) {

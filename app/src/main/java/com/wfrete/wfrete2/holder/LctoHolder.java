@@ -3,12 +3,10 @@ package com.wfrete.wfrete2.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.wfrete.wfrete2.ItemClickListener;
+import com.wfrete.wfrete2.util.ItemClickListener;
 import com.wfrete.wfrete2.R;
-import com.wfrete.wfrete2.adapter.LctoAdapter;
 
 /**
  * Created by Desenvolvimento 11 on 20/08/2017.

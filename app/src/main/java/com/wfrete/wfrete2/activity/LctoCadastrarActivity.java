@@ -27,6 +27,7 @@ import com.wfrete.wfrete2.dao.FreteDAO;
 import com.wfrete.wfrete2.dao.LctoDAO;
 import com.wfrete.wfrete2.model.Categoria;
 import com.wfrete.wfrete2.model.Lcto;
+import com.wfrete.wfrete2.util.Constantes;
 
 import java.sql.Time;
 import java.text.DecimalFormat;
@@ -40,11 +41,6 @@ import java.util.Date;
 public class LctoCadastrarActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,
                                                                         TimePickerDialog.OnTimeSetListener, DialogInterface.OnCancelListener{
 
-    private static final int ID_COM_NOVO_REG_INSERIDO = 2;
-    private static final int ID_COM_REG_ALTERADO = 5;
-    private static final int ID_COM_CANCELADO = 9;
-    private static final int ID_COM_REG_DELETADO = 13;
-    private static final int ID_COM_LISTAR = 0;
 
     private DecimalFormat df = new DecimalFormat("###.00");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMMM");
@@ -245,12 +241,12 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
     public void tratarSelecaoCategoria(View view){
         Intent i = new Intent(this, CategoriaListarNoLctoActivity.class);
         i.putExtra("categoria", txtCategoria.getText().toString());
-        startActivityForResult(i,ID_COM_LISTAR);
+        startActivityForResult(i, Constantes.ID_COM_LISTAR);
     }
 
     public void btCancelarOnClick(View view){
         Intent intent = getIntent();
-        setResult(ID_COM_CANCELADO,intent);
+        setResult(Constantes.ID_COM_CANCELADO,intent);
         finish();
     }
 
@@ -267,7 +263,7 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
                         if (sucesso) {
                             Intent intent = getIntent();
                             intent.putExtra("lcto", lctoEditado);
-                            setResult(ID_COM_REG_DELETADO,intent);
+                            setResult(Constantes.ID_COM_REG_DELETADO,intent);
                             finish();
                         } else {
 
@@ -332,12 +328,12 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
                 Lcto lcto = dao.lctoById(lctoEditado.getId());
                 Intent intent = getIntent();
                 intent.putExtra("lcto", lcto);
-                setResult(ID_COM_REG_ALTERADO,intent);
+                setResult(Constantes.ID_COM_REG_ALTERADO,intent);
             }else {
                 Lcto lcto = dao.retornarUltimo();
                 Intent intent = getIntent();
                 intent.putExtra("lcto", lcto);
-                setResult(ID_COM_NOVO_REG_INSERIDO,intent);
+                setResult(Constantes.ID_COM_NOVO_REG_INSERIDO,intent);
             }
 
             finish();
@@ -399,7 +395,7 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
         if (data != null){
-            if (requestCode == ID_COM_LISTAR){
+            if (requestCode == Constantes.ID_COM_LISTAR){
 
                 if (resultCode == 9) {
 

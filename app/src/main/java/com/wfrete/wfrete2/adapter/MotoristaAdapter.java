@@ -16,15 +16,13 @@ import android.widget.Button;
 
 import android.app.Fragment;
 
-import com.wfrete.wfrete2.Funcoes;
+import com.wfrete.wfrete2.util.Funcoes;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.activity.MotoristaListarActivity;
 import com.wfrete.wfrete2.dao.MotoristaDAO;
 import com.wfrete.wfrete2.holder.MotoristaHolder;
 import com.wfrete.wfrete2.model.Motorista;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 
