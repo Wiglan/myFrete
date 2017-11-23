@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.wfrete.wfrete2.activity.InicioActivity">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="26dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textAppearance="@style/Text.ListItemSubtitle"
+        android:text="Bem Vindo!" />
+
+
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textAppearance="@android:style/TextAppearance.Holo.DialogWindowTitle"
+        android:text="1º Passo" />
+
+    <Button
+        android:id="@+id/btNovoVeiculo_Inicio"
+        style="@android:style/Widget.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:text="Cadastrar Veiculo" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="240dp"
+        android:textAppearance="@android:style/TextAppearance.Holo.DialogWindowTitle"
+        android:text="2º Passo" />
+
+    <Button
+        android:id="@+id/btNovoMotorista_Inicio"
+        style="@android:style/Widget.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView7"
+        android:layout_centerHorizontal="true"
+        android:text="Cadastrar Motorista" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_alignStart="@+id/textView7"
+        android:layout_below="@+id/btNovoMotorista_Inicio"
+        android:textAppearance="@android:style/TextAppearance.Holo.DialogWindowTitle"
+        android:text="3º Passo" />
+
+    <Button
+        android:id="@+id/btNovoFrete_Inicio"
+        style="@android:style/Widget.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btNovoMotorista_Inicio"
+        android:layout_alignStart="@+id/btNovoMotorista_Inicio"
+        android:layout_below="@+id/textView8"
+        android:text="Lançar Frete" />
+
+
+</RelativeLayout>

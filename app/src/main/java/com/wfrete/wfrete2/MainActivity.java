@@ -18,8 +18,11 @@ import android.view.MenuItem;
 
 import com.wfrete.wfrete2.activity.CategoriaListarActivity;
 import com.wfrete.wfrete2.activity.FreteListarActivity;
+import com.wfrete.wfrete2.activity.InicioActivity;
 import com.wfrete.wfrete2.activity.MotoristaListarActivity;
 import com.wfrete.wfrete2.activity.VeiculoListarActivity;
+import com.wfrete.wfrete2.dao.FreteDAO;
+import com.wfrete.wfrete2.model.Frete;
 
 import java.util.Random;
 
@@ -49,6 +52,15 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FragmentManager fragmentManager = getFragmentManager();
+
+        //enquanto acessar o app e nao existir um frete, mostrar a tela de incio
+        Frete frete = new FreteDAO(this).retornarUltimo();
+        if (!(frete != null)){
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new InicioActivity()).commit();
+        }
+
     }
 
     @Override

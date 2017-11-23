@@ -59,20 +59,20 @@
 
 
         <Button
-            android:text="Cancelar"
             android:id="@+id/btCancelarMotorista"
+            style="@android:style/Widget.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="btCancelarOnClick"
-            />
+            android:text="Cancelar" />
 
         <Button
-            android:text="Salvar"
             android:id="@+id/btSalvarMotorista"
+            style="@android:style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="btSalvarOnClick"
-            />
+            android:text="Salvar" />
 
     </LinearLayout>
 
