@@ -93,28 +93,45 @@ public class MotoristaAdapter extends RecyclerView.Adapter<MotoristaHolder> {
             @Override
             public void onClick(View v) {
                 final View view = v;
+
+                boolean existeVinculos = new MotoristaDAO(view.getContext()).existeVinculos(motoristas.get(position).getId());
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Confirmação")
-                        .setMessage("Tem certeza que deseja excluir este motorista?")
-                        .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Motorista motorista = motoristas.get(position);
-                                MotoristaDAO dao = new MotoristaDAO(view.getContext());
-                                boolean sucesso = dao.excluir(motorista.getId());
-                                if (sucesso) {
-                                    removerMotorista(motorista);
-                                    Snackbar.make(view, "Motorista excluido com sucesso!", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
-                                } else {
-                                    Snackbar.make(view, "Erro ao excluir o motorista!", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
+
+                //permitir excluir somete se nao tiver sendo utilizado.
+                if (existeVinculos){
+
+                    builder.setTitle("Atenção")
+                            .setMessage("Não é possível excluir o Motorista. Ele já esta sendo utilizado nos Fretes.")
+                            .setNegativeButton("Entendi", null)
+                            .create()
+                            .show();
+
+                }else {
+
+                    builder.setTitle("Confirmação")
+                            .setMessage("Tem certeza que deseja excluir este motorista?")
+                            .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Motorista motorista = motoristas.get(position);
+                                    MotoristaDAO dao = new MotoristaDAO(view.getContext());
+                                    boolean sucesso = dao.excluir(motorista.getId());
+                                    if (sucesso) {
+                                        removerMotorista(motorista);
+                                        Snackbar.make(view, "Motorista excluido com sucesso!", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                    } else {
+                                        Snackbar.make(view, "Erro ao excluir o motorista!", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                    }
                                 }
-                            }
-                        })
-                        .setNegativeButton("Cancelar", null)
-                        .create()
-                        .show();
+                            })
+                            .setNegativeButton("Cancelar", null)
+                            .create()
+                            .show();
+
+                }
             }
         });
 

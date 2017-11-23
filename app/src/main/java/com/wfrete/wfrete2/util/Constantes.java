@@ -22,4 +22,13 @@ public class Constantes {
     public static final int ID_COM_REG_SELECIONADO = 22;
 
 
+    //nome das tabelas do banco.
+    public static final String TABLE_CATEGORIAS = "Categorias";
+    public static final String TABLE_FRETES = "Fretes";
+    public static final String TABLE_LCTO = "Frete_Lcto";
+    public static final String TABLE_MOTORISTAS = "Motoristas";
+    public static final String TABLE_VEICULOS = "Veiculos";
+
+
+
 }

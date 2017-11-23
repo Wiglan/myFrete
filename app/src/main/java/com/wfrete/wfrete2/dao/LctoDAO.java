@@ -6,6 +6,7 @@ import android.database.Cursor;
 
 import com.wfrete.wfrete2.bd.DbGateway;
 import com.wfrete.wfrete2.model.Lcto;
+import com.wfrete.wfrete2.util.Constantes;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -24,7 +25,6 @@ import java.util.List;
 //Fornece uma interface para que as as camadas de aplicação se comuniquem com o datasource.
 public class LctoDAO {
 
-    private final String TABLE_LCTO = "Frete_Lcto";
     private DbGateway gw;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -51,14 +51,14 @@ public class LctoDAO {
 
 
         if(id > 0)
-            return gw.getDatabase().update(TABLE_LCTO, cv, "ID=?", new String[]{ id + "" }) > 0;
+            return gw.getDatabase().update(Constantes.TABLE_LCTO, cv, "ID=?", new String[]{ id + "" }) > 0;
         else
-            return gw.getDatabase().insert(TABLE_LCTO, null, cv) > 0;
+            return gw.getDatabase().insert(Constantes.TABLE_LCTO, null, cv) > 0;
 
     }
 
     public boolean excluir(int id){
-        return gw.getDatabase().delete(TABLE_LCTO, "ID=?", new String[]{ id + "" }) > 0;
+        return gw.getDatabase().delete(Constantes.TABLE_LCTO, "ID=?", new String[]{ id + "" }) > 0;
     }
 
     public List<Lcto> ListarLctosByFrete(int frete_id_pesquisa){
@@ -114,7 +114,7 @@ public class LctoDAO {
 
     public Lcto lctoById(int idPesquisa){
 
-        Cursor cursor = gw.getDatabase().query(TABLE_LCTO,null,"id=?",new String[] {String.valueOf(idPesquisa)},null,null,null, null);
+        Cursor cursor = gw.getDatabase().query(Constantes.TABLE_LCTO,null,"id=?",new String[] {String.valueOf(idPesquisa)},null,null,null, null);
 
         if(cursor.moveToNext()){
 

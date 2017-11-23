@@ -74,29 +74,46 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaHolder> {
         holder.btExcluir.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final View view = v;
+
+                boolean existeVinculos = new CategoriaDAO(view.getContext()).existeVinculos(categorias.get(position).getId());
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Confirmação")
-                        .setMessage("Tem certeza que deseja excluir este categoria?")
-                        .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Categoria categoria = categorias.get(position);
-                                CategoriaDAO dao = new CategoriaDAO(view.getContext());
-                                boolean sucesso = dao.excluir(categoria.getId());
-                                if (sucesso) {
-                                    removerCategoria(categoria);
-                                    Snackbar.make(view, "Categoria excluido com sucesso!", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
-                                } else {
-                                    Snackbar.make(view, "Erro ao excluir o categoria!", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
+
+                //permitir excluir somete se nao tiver sendo utilizado.
+                if (existeVinculos){
+
+                    builder.setTitle("Atenção")
+                            .setMessage("Não é possível excluir a Categoria. Ela já esta sendo utilizada.")
+                            .setNegativeButton("Entendi", null)
+                            .create()
+                            .show();
+
+                }else {
+
+                    builder.setTitle("Confirmação")
+                            .setMessage("Tem certeza que deseja excluir este categoria?")
+                            .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Categoria categoria = categorias.get(position);
+                                    CategoriaDAO dao = new CategoriaDAO(view.getContext());
+                                    boolean sucesso = dao.excluir(categoria.getId());
+                                    if (sucesso) {
+                                        removerCategoria(categoria);
+                                        Snackbar.make(view, "Categoria excluido com sucesso!", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                    } else {
+                                        Snackbar.make(view, "Erro ao excluir o categoria!", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                    }
                                 }
-                            }
-                        })
-                        .setNegativeButton("Cancelar", null)
-                        .create()
-                        .show();
+                            })
+                            .setNegativeButton("Cancelar", null)
+                            .create()
+                            .show();
+                }
             }
         });
 

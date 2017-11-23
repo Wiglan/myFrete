@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.wfrete.wfrete2.util.Constantes;
 import com.wfrete.wfrete2.util.Funcoes;
 import com.wfrete.wfrete2.bd.DbGateway;
 import com.wfrete.wfrete2.model.Motorista;
@@ -23,7 +24,6 @@ import java.util.List;
 //Fornece uma interface para que as as camadas de aplicação se comuniquem com o datasource.
 public class MotoristaDAO {
 
-    private final String TABLE_MOTORISTAS = "Motoristas";
     private DbGateway gw;
 
     public MotoristaDAO(Context ctx){
@@ -51,9 +51,9 @@ public class MotoristaDAO {
         }
 
         if(id > 0)
-            return gw.getDatabase().update(TABLE_MOTORISTAS, cv, "ID=?", new String[]{ id + "" }) > 0;
+            return gw.getDatabase().update(Constantes.TABLE_MOTORISTAS, cv, "ID=?", new String[]{ id + "" }) > 0;
         else
-            return gw.getDatabase().insert(TABLE_MOTORISTAS, null, cv) > 0;
+            return gw.getDatabase().insert(Constantes.TABLE_MOTORISTAS, null, cv) > 0;
 
         //Aqui usei as boas práticas recomendadas na documentação oficial do Android, onde diz que para INSERTs devemos usar o método insert informando o nome da tabela e um map de content values com as colunas e valores que queremos inserir.
     }
@@ -62,12 +62,12 @@ public class MotoristaDAO {
         ContentValues cv = new ContentValues();
         cv.put("s_id", s_id);
         cv.put("s_datahora", s_datahora);
-        return gw.getDatabase().update(TABLE_MOTORISTAS, cv, "ID=?", new String[]{ id + "" }) > 0;
+        return gw.getDatabase().update(Constantes.TABLE_MOTORISTAS, cv, "ID=?", new String[]{ id + "" }) > 0;
     }
 
 
     public boolean excluir(int id){
-        return gw.getDatabase().delete(TABLE_MOTORISTAS, "ID=?", new String[]{ id + "" }) > 0;
+        return gw.getDatabase().delete(Constantes.TABLE_MOTORISTAS, "ID=?", new String[]{ id + "" }) > 0;
     }
 
 
@@ -125,7 +125,7 @@ public class MotoristaDAO {
 
     public Motorista motoristaById(int idPesquisa){
 
-        Cursor cursor = gw.getDatabase().query(TABLE_MOTORISTAS,null,"id=?",new String[] {String.valueOf(idPesquisa)},null,null,null, null);
+        Cursor cursor = gw.getDatabase().query(Constantes.TABLE_MOTORISTAS,null,"id=?",new String[] {String.valueOf(idPesquisa)},null,null,null, null);
 
         if(cursor.moveToNext()){
 
@@ -154,6 +154,17 @@ public class MotoristaDAO {
             return null;
         }
 
+    }
+
+    public boolean existeVinculos(int motoristaId) {
+
+        Cursor cursor = gw.getDatabase().query(Constantes.TABLE_FRETES,null,"MOTORISTA_ID=?", new String[] {String.valueOf(motoristaId)},null,null,null, null);
+
+        if(cursor.moveToNext()){
+            return true;
+        }
+
+        return false;
     }
 
 

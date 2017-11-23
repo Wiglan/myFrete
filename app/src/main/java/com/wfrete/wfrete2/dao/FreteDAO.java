@@ -6,6 +6,7 @@ import android.database.Cursor;
 
 import com.wfrete.wfrete2.bd.DbGateway;
 import com.wfrete.wfrete2.model.Frete;
+import com.wfrete.wfrete2.util.Constantes;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +24,6 @@ import java.util.List;
 //Fornece uma interface para que as as camadas de aplicação se comuniquem com o datasource.
 public class FreteDAO {
 
-    private final String TABLE_FRETES = "Fretes";
     private DbGateway gw;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -54,14 +54,14 @@ public class FreteDAO {
 
 
         if(id > 0)
-            return gw.getDatabase().update(TABLE_FRETES, cv, "ID=?", new String[]{ id + "" }) > 0;
+            return gw.getDatabase().update(Constantes.TABLE_FRETES, cv, "ID=?", new String[]{ id + "" }) > 0;
         else
-            return gw.getDatabase().insert(TABLE_FRETES, null, cv) > 0;
+            return gw.getDatabase().insert(Constantes.TABLE_FRETES, null, cv) > 0;
 
     }
 
     public boolean excluir(int id){
-        return gw.getDatabase().delete(TABLE_FRETES, "ID=?", new String[]{ id + "" }) > 0;
+        return gw.getDatabase().delete(Constantes.TABLE_FRETES, "ID=?", new String[]{ id + "" }) > 0;
     }
 
     public List<Frete> ListarFretes(){
@@ -129,7 +129,7 @@ public class FreteDAO {
 
     public Frete freteById(int idPesquisa){
 
-        Cursor cursor = gw.getDatabase().query(TABLE_FRETES,null,"id=?",new String[] {String.valueOf(idPesquisa)},null,null,null, null);
+        Cursor cursor = gw.getDatabase().query(Constantes.TABLE_FRETES,null,"id=?",new String[] {String.valueOf(idPesquisa)},null,null,null, null);
 
         if(cursor.moveToNext()){
 

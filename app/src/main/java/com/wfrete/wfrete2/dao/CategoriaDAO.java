@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.wfrete.wfrete2.util.Constantes;
 import com.wfrete.wfrete2.util.Funcoes;
 import com.wfrete.wfrete2.bd.DbGateway;
 import com.wfrete.wfrete2.model.Categoria;
@@ -19,7 +20,6 @@ import java.util.List;
 
 public class CategoriaDAO {
 
-    private final String TABLE_CATEGORIAS = "Categorias";
     private DbGateway gw;
 
     public CategoriaDAO(Context ctx){
@@ -46,14 +46,14 @@ public class CategoriaDAO {
         }
 
         if(id > 0)
-            return gw.getDatabase().update(TABLE_CATEGORIAS, cv, "ID=?", new String[]{ id + "" }) > 0;
+            return gw.getDatabase().update(Constantes.TABLE_CATEGORIAS, cv, "ID=?", new String[]{ id + "" }) > 0;
         else
-            return gw.getDatabase().insert(TABLE_CATEGORIAS, null, cv) > 0;
+            return gw.getDatabase().insert(Constantes.TABLE_CATEGORIAS, null, cv) > 0;
 
     }
 
     public boolean excluir(int id){
-        return gw.getDatabase().delete(TABLE_CATEGORIAS, "ID=?", new String[]{ id + "" }) > 0;
+        return gw.getDatabase().delete(Constantes.TABLE_CATEGORIAS, "ID=?", new String[]{ id + "" }) > 0;
     }
 
 
@@ -61,7 +61,7 @@ public class CategoriaDAO {
         ContentValues cv = new ContentValues();
         cv.put("s_id", s_id);
         cv.put("s_datahora", s_datahora);
-        return gw.getDatabase().update(TABLE_CATEGORIAS, cv, "ID=?", new String[]{ id + "" }) > 0;
+        return gw.getDatabase().update(Constantes.TABLE_CATEGORIAS, cv, "ID=?", new String[]{ id + "" }) > 0;
     }
 
 
@@ -119,7 +119,7 @@ public class CategoriaDAO {
 
     public Categoria categoriaById(int idPesquisa){
 
-        Cursor cursor = gw.getDatabase().query(TABLE_CATEGORIAS,null,"id=?",new String[] {String.valueOf(idPesquisa)},null,null,null, null);
+        Cursor cursor = gw.getDatabase().query(Constantes.TABLE_CATEGORIAS,null,"id=?",new String[] {String.valueOf(idPesquisa)},null,null,null, null);
 
         if(cursor.moveToNext()){
 
@@ -153,7 +153,7 @@ public class CategoriaDAO {
 
     public Categoria categoriaByNome(String nome){
 
-        Cursor cursor = gw.getDatabase().query(TABLE_CATEGORIAS,null,"UPPER(NOME)=?", new String[] {nome.toUpperCase()},null,null,null, null);
+        Cursor cursor = gw.getDatabase().query(Constantes.TABLE_CATEGORIAS,null,"UPPER(NOME)=?", new String[] {nome.toUpperCase()},null,null,null, null);
 
         if(cursor.moveToNext()){
 
@@ -182,5 +182,14 @@ public class CategoriaDAO {
 
     }
 
+    public boolean existeVinculos(int categoriaId) {
 
+        Cursor cursor = gw.getDatabase().query(Constantes.TABLE_LCTO,null,"CATEGORIA_ID=?", new String[] {String.valueOf(categoriaId)},null,null,null, null);
+
+        if(cursor.moveToNext()){
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.wfrete.wfrete2.util.Constantes;
 import com.wfrete.wfrete2.util.Funcoes;
 import com.wfrete.wfrete2.bd.DbGateway;
 import com.wfrete.wfrete2.model.Veiculo;
@@ -19,7 +20,6 @@ import java.util.List;
 
 public class VeiculoDAO {
 
-    private final String TABLE_VEICULOS = "Veiculos";
     private DbGateway gw;
 
     public VeiculoDAO(Context ctx){
@@ -49,9 +49,9 @@ public class VeiculoDAO {
         }
 
         if(id > 0)
-            return gw.getDatabase().update(TABLE_VEICULOS, cv, "ID=?", new String[]{ id + "" }) > 0;
+            return gw.getDatabase().update(Constantes.TABLE_VEICULOS, cv, "ID=?", new String[]{ id + "" }) > 0;
         else
-            return gw.getDatabase().insert(TABLE_VEICULOS, null, cv) > 0;
+            return gw.getDatabase().insert(Constantes.TABLE_VEICULOS, null, cv) > 0;
 
     }
 
@@ -59,11 +59,11 @@ public class VeiculoDAO {
         ContentValues cv = new ContentValues();
         cv.put("s_id", s_id);
         cv.put("s_datahora", s_datahora);
-        return gw.getDatabase().update(TABLE_VEICULOS, cv, "ID=?", new String[]{ id + "" }) > 0;
+        return gw.getDatabase().update(Constantes.TABLE_VEICULOS, cv, "ID=?", new String[]{ id + "" }) > 0;
     }
 
     public boolean excluir(int id){
-        return gw.getDatabase().delete(TABLE_VEICULOS, "ID=?", new String[]{ id + "" }) > 0;
+        return gw.getDatabase().delete(Constantes.TABLE_VEICULOS, "ID=?", new String[]{ id + "" }) > 0;
     }
 
 
@@ -125,7 +125,7 @@ public class VeiculoDAO {
 
     public Veiculo veiculoById(int idPesquisa){
 
-        Cursor cursor = gw.getDatabase().query(TABLE_VEICULOS,null,"id=?",new String[] {String.valueOf(idPesquisa)},null,null,null, null);
+        Cursor cursor = gw.getDatabase().query(Constantes.TABLE_VEICULOS,null,"id=?",new String[] {String.valueOf(idPesquisa)},null,null,null, null);
 
         if(cursor.moveToNext()){
 
@@ -157,5 +157,16 @@ public class VeiculoDAO {
             return null;
         }
 
+    }
+
+    public boolean existeVinculos(int veiculosId) {
+
+        Cursor cursor = gw.getDatabase().query(Constantes.TABLE_FRETES,null,"VEICULO_ID=?", new String[] {String.valueOf(veiculosId)},null,null,null, null);
+
+        if(cursor.moveToNext()){
+            return true;
+        }
+
+        return false;
     }
 }

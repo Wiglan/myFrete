@@ -79,28 +79,46 @@ public class VeiculoAdapter extends RecyclerView.Adapter<VeiculoHolder> {
             @Override
             public void onClick(View v) {
                 final View view = v;
+
+                boolean existeVinculos = new VeiculoDAO(view.getContext()).existeVinculos(veiculos.get(position).getId());
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Confirmação")
-                        .setMessage("Tem certeza que deseja excluir este veiculo?")
-                        .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Veiculo veiculo = veiculos.get(position);
-                                VeiculoDAO dao = new VeiculoDAO(view.getContext());
-                                boolean sucesso = dao.excluir(veiculo.getId());
-                                if (sucesso) {
-                                    removerVeiculo(veiculo);
-                                    Snackbar.make(view, "Veiculo excluido com sucesso!", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
-                                } else {
-                                    Snackbar.make(view, "Erro ao excluir o veiculo!", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
+
+                //permitir excluir somete se nao tiver sendo utilizado.
+                if (existeVinculos){
+
+                    builder.setTitle("Atenção")
+                            .setMessage("Não é possível excluir o Veículo. Ele já esta sendo utilizado nos Fretes.")
+                            .setNegativeButton("Ta Bão!", null)
+                            .create()
+                            .show();
+
+                }else {
+
+
+                    builder.setTitle("Confirmação")
+                            .setMessage("Tem certeza que deseja excluir este veiculo?")
+                            .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Veiculo veiculo = veiculos.get(position);
+                                    VeiculoDAO dao = new VeiculoDAO(view.getContext());
+                                    boolean sucesso = dao.excluir(veiculo.getId());
+                                    if (sucesso) {
+                                        removerVeiculo(veiculo);
+                                        Snackbar.make(view, "Veiculo excluido com sucesso!", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                    } else {
+                                        Snackbar.make(view, "Erro ao excluir o veiculo!", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                    }
                                 }
-                            }
-                        })
-                        .setNegativeButton("Cancelar", null)
-                        .create()
-                        .show();
+                            })
+                            .setNegativeButton("Cancelar", null)
+                            .create()
+                            .show();
+
+                }
             }
         });
 
