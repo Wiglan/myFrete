@@ -3,6 +3,7 @@ package com.wfrete.wfrete2.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import com.wfrete.wfrete2.R;
+import com.wfrete.wfrete2.api.controller.VeiculoController;
 import com.wfrete.wfrete2.dao.VeiculoDAO;
 import com.wfrete.wfrete2.model.Veiculo;
 import com.wfrete.wfrete2.model.Veiculo;
@@ -39,6 +41,10 @@ public class VeiculoCadastrarActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_veiculo);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
 
         edtNome = (EditText)findViewById(R.id.edtNomeVeiculo);
         edtModelo = (EditText)findViewById(R.id.edtModeloVeiculo);
@@ -90,7 +96,10 @@ public class VeiculoCadastrarActivity extends AppCompatActivity {
                                   edtNome.getText().toString(),
                                   edtModelo.getText().toString(),
                                   edtPlaca.getText().toString(),
-                                  Integer.parseInt(edtAno.getText().toString()));
+                                  Integer.parseInt(edtAno.getText().toString()),
+                    veiculoEditado.getS_id(),
+                    null);
+
 
         }
         else {
@@ -98,22 +107,27 @@ public class VeiculoCadastrarActivity extends AppCompatActivity {
             inserido = dao.salvar(edtNome.getText().toString(),
                                     edtModelo.getText().toString(),
                                     edtPlaca.getText().toString(),
-                                    Integer.parseInt(edtAno.getText().toString()));
+                                    Integer.parseInt(edtAno.getText().toString()),  0, null);
         }
 
         if (inserido) {
 
+            Veiculo veiculo;
+
             if(veiculoEditado != null) {
-                Veiculo veiculo = dao.veiculoById(veiculoEditado.getId());
+                veiculo = dao.veiculoById(veiculoEditado.getId());
                 Intent intent = getIntent();
                 intent.putExtra("veiculo", veiculo);
                 setResult(ID_COM_REG_ALTERADO,intent);
             }else {
-                Veiculo veiculo = dao.retornarUltimo();
+                veiculo = dao.retornarUltimo();
                 Intent intent = getIntent();
                 intent.putExtra("veiculo", veiculo);
                 setResult(ID_COM_NOVO_REG_INSERIDO,intent);
             }
+
+            Veiculo veiculoWS = new Veiculo(veiculo.getId(),veiculo.getNome(), veiculo.getModelo(),veiculo.getPlaca(), veiculo.getAno(), veiculo.getS_id(), veiculo.getS_datahora());
+            VeiculoController.wsSalvarVeiculo(this, veiculoWS);
 
             finish();
 

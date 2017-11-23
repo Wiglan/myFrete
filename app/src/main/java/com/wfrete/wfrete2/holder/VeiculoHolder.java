@@ -17,12 +17,14 @@ import com.wfrete.wfrete2.R;
 public class VeiculoHolder extends RecyclerView.ViewHolder {
 
     public TextView nome;
+    public TextView s_datahora;
     public ImageButton btEditar;
     public ImageButton btExcluir;
 
     public VeiculoHolder(View itemView) {
         super(itemView);
         nome = (TextView) itemView.findViewById(R.id.nomeCliente);
+        s_datahora = (TextView) itemView.findViewById(R.id.datahoraintegracaoCliente);
         btEditar = (ImageButton) itemView.findViewById(R.id.btnEdit);
         btExcluir = (ImageButton) itemView.findViewById(R.id.btnDelete);
     }

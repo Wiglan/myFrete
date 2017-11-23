@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.wfrete.wfrete2.Funcoes;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.activity.VeiculoListarActivity;
 import com.wfrete.wfrete2.dao.VeiculoDAO;
@@ -39,20 +41,6 @@ public class VeiculoAdapter extends RecyclerView.Adapter<VeiculoHolder> {
         this.context = context;
     }
 
-   // public VeiculoAdapter(List<Veiculo> veiculos) {
-    //    this.veiculos = veiculos;
-   // }
-
-    private Activity getActivity(View view) {
-        Context context = view.getContext();
-        while (context instanceof ContextWrapper) {
-            if (context instanceof Activity) {
-                return (Activity)context;
-            }
-            context = ((ContextWrapper)context).getBaseContext();
-        }
-        return null;
-    }
 
     @Override
     public VeiculoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -62,6 +50,16 @@ public class VeiculoAdapter extends RecyclerView.Adapter<VeiculoHolder> {
 
     @Override
     public void onBindViewHolder(VeiculoHolder holder, final int position) {
+
+        String str = Funcoes.formataMsgIntegracao(veiculos.get(position).getS_datahora());
+        if (str.equalsIgnoreCase("Não Sincronizado")){
+            holder.s_datahora.setTextColor(Color.RED);
+        }else{
+            holder.s_datahora.setTextColor(Color.BLUE);
+        }
+        holder.s_datahora.setText(str);
+        holder.nome.setText(veiculos.get(position).getNome());
+
 
         holder.nome.setText(veiculos.get(position).getNome());
 

@@ -1,6 +1,7 @@
 package com.wfrete.wfrete2.api.service;
 
 import com.wfrete.wfrete2.model.Categoria;
+import com.wfrete.wfrete2.model.RetornoIntegracao;
 
 import java.util.List;
 
@@ -18,14 +19,14 @@ public interface CategoriaService {
     Call<List<Categoria>> getAll();
 
     @GET("/categoria/{id}")
-    Call<Categoria> getOne(@Path("id") Long id);
+    Call<Categoria> getOne(@Path("id") Integer id);
 
     @POST("/categoria/")
-    Call<Void> save(@Body Categoria categoria);
+    Call<RetornoIntegracao> save(@Body Categoria categoria);
 
     @PUT("/categoria/")
-    Call<Void> update(@Body Categoria categoria);
+    Call<RetornoIntegracao> update(@Body Categoria categoria);
 
     @DELETE("/categoria/{id}")
-    Call<Void> delete(@Path("id") Long id);
+    Call<Void> delete(@Path("id") Integer id);
 }

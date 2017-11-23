@@ -1,6 +1,7 @@
 package com.wfrete.wfrete2.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Desenvolvimento 11 on 04/11/2017.
@@ -13,18 +14,22 @@ public class Veiculo implements Serializable {
     private String modelo;
     private String placa;
     private int ano;
+    private int s_id;
+    private Date s_datahora;
 
 
     public Veiculo(){
 
     }
 
-    public Veiculo(int id, String nome, String modelo, String placa, int ano) {
+    public Veiculo(int id, String nome, String modelo, String placa, int ano, int s_id, Date s_datahora) {
         this.id = id;
         this.nome = nome;
         this.modelo = modelo;
         this.placa = placa;
         this.ano = ano;
+        this.s_datahora = s_datahora;
+        this.s_id = s_id;
     }
 
     public int getId() {
@@ -67,6 +72,21 @@ public class Veiculo implements Serializable {
         this.ano = ano;
     }
 
+    public int getS_id() {
+        return s_id;
+    }
+
+    public void setS_id(int s_id) {
+        this.s_id = s_id;
+    }
+
+    public Date getS_datahora() {
+        return s_datahora;
+    }
+
+    public void setS_datahora(Date s_datahora) {
+        this.s_datahora = s_datahora;
+    }
 
     @Override
     public boolean equals(Object o) {

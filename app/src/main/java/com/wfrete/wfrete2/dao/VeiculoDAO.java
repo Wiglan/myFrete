@@ -4,10 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.wfrete.wfrete2.Funcoes;
 import com.wfrete.wfrete2.bd.DbGateway;
 import com.wfrete.wfrete2.model.Veiculo;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,11 +26,11 @@ public class VeiculoDAO {
         gw = DbGateway.getInstance(ctx);
     }
 
-    public boolean salvar(String nome, String modelo, String placa, int ano){
-        return salvar(0, nome, modelo,placa, ano);
+    public boolean salvar(String nome, String modelo, String placa, int ano, int s_id, Date s_datahora){
+        return salvar(0, nome, modelo,placa, ano, s_id, s_datahora);
     }
 
-    public boolean salvar(int id, String nome, String modelo,String placa, int ano){
+    public boolean salvar(int id, String nome, String modelo,String placa, int ano, int s_id, Date s_datahora){
 
         ContentValues cv = new ContentValues();
 
@@ -36,11 +39,27 @@ public class VeiculoDAO {
         cv.put("placa", placa);
         cv.put("ano",ano);
 
+        cv.put("s_id", s_id);
+
+        if (s_datahora != null){
+            cv.put("s_datahora", Funcoes.dateFormatIntegracao.format(s_datahora));
+        }
+        else {
+            cv.putNull("s_datahora");
+        }
+
         if(id > 0)
             return gw.getDatabase().update(TABLE_VEICULOS, cv, "ID=?", new String[]{ id + "" }) > 0;
         else
             return gw.getDatabase().insert(TABLE_VEICULOS, null, cv) > 0;
 
+    }
+
+    public boolean salvar_dados_integracao(int id, int s_id, String s_datahora){
+        ContentValues cv = new ContentValues();
+        cv.put("s_id", s_id);
+        cv.put("s_datahora", s_datahora);
+        return gw.getDatabase().update(TABLE_VEICULOS, cv, "ID=?", new String[]{ id + "" }) > 0;
     }
 
     public boolean excluir(int id){
@@ -57,7 +76,21 @@ public class VeiculoDAO {
             String modelo = cursor.getString(cursor.getColumnIndex("MODELO"));
             String placa = cursor.getString(cursor.getColumnIndex("PLACA"));
             int ano = cursor.getInt(cursor.getColumnIndex("ANO"));
-            veiculos.add(new Veiculo(id, nome, modelo, placa, ano));
+
+            int s_id = cursor.getInt(cursor.getColumnIndex("S_ID"));
+
+            Date s_datahora = null;
+            try {
+                String dataStr = cursor.getString(cursor.getColumnIndex("S_DATAHORA"));
+                if (dataStr != null){
+                    s_datahora = Funcoes.dateFormatIntegracao.parse(dataStr);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+            veiculos.add(new Veiculo(id, nome, modelo, placa, ano, s_id, s_datahora));
         }
         cursor.close();
         return veiculos;
@@ -71,8 +104,20 @@ public class VeiculoDAO {
             String modelo = cursor.getString(cursor.getColumnIndex("MODELO"));
             String placa = cursor.getString(cursor.getColumnIndex("PLACA"));
             int ano = cursor.getInt(cursor.getColumnIndex("ANO"));
+
+            int s_id = cursor.getInt(cursor.getColumnIndex("S_ID"));
+
+            Date s_datahora = null;
+            try {
+                String dataStr = cursor.getString(cursor.getColumnIndex("S_DATAHORA"));
+                if (dataStr != null){
+                    s_datahora = Funcoes.dateFormatIntegracao.parse(dataStr);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             cursor.close();
-            return new Veiculo(id, nome, modelo, placa, ano);
+            return new Veiculo(id, nome, modelo, placa, ano, s_id, s_datahora);
         }
 
         return null;
@@ -91,6 +136,19 @@ public class VeiculoDAO {
             veiculo.setModelo(cursor.getString(cursor.getColumnIndex("MODELO")));
             veiculo.setPlaca(cursor.getString(cursor.getColumnIndex("PLACA")));
             veiculo.setAno(cursor.getInt(cursor.getColumnIndex("ANO")));
+
+            veiculo.setS_id(cursor.getInt(cursor.getColumnIndex("S_ID")));
+            Date s_datahora = null;
+            try {
+                String dataStr = cursor.getString(cursor.getColumnIndex("S_DATAHORA"));
+                if (dataStr != null){
+                    s_datahora = Funcoes.dateFormatIntegracao.parse(dataStr);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            veiculo.setS_datahora(s_datahora);
+
             cursor.close();
 
             return veiculo;

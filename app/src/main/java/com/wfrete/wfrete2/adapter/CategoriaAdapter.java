@@ -51,7 +51,6 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaHolder> {
     @Override
     public void onBindViewHolder(CategoriaHolder holder, final int position) {
 
-
         String str = Funcoes.formataMsgIntegracao(categorias.get(position).getS_datahora());
         if (str.equalsIgnoreCase("Não Sincronizado")){
             holder.s_datahora.setTextColor(Color.RED);

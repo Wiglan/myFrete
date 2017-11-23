@@ -3,6 +3,7 @@ package com.wfrete.wfrete2.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.wfrete.wfrete2.R;
+import com.wfrete.wfrete2.api.controller.CategoriaController;
 import com.wfrete.wfrete2.dao.CategoriaDAO;
 import com.wfrete.wfrete2.model.Categoria;
 
@@ -40,6 +42,11 @@ public class CategoriaCadastrarActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categoria);
+
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
 
         edtNome = (EditText)findViewById(R.id.edtNomeCategoria);
 
@@ -132,8 +139,8 @@ public class CategoriaCadastrarActivity extends AppCompatActivity {
                 setResult(ID_COM_NOVO_REG_INSERIDO,intent);
             }
 
-
-            //CategoriaController.wsSalvarMotorista(this, categoriaWS);
+            Categoria categoriaWS = new Categoria(categoria.getId(), categoria.getNome(), categoria.getTipo(), categoria.getS_id(), categoria.getS_datahora());
+            CategoriaController.wsSalvarCategoria(this, categoriaWS);
 
             finish();
 

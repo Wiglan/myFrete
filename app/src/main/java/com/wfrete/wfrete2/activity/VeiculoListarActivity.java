@@ -3,6 +3,7 @@ package com.wfrete.wfrete2.activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -42,6 +43,10 @@ public class VeiculoListarActivity extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
 
         fab = (FloatingActionButton) view.findViewById(R.id.fabVeiculo);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -89,8 +94,8 @@ public class VeiculoListarActivity extends Fragment {
                 if (resultCode == 2) {
 
                     if (data.hasExtra("veiculo")) {
-                        Veiculo veiculo = new Veiculo();
-                        veiculo = (Veiculo) data.getSerializableExtra("veiculo");
+                        Veiculo veiculo = (Veiculo) data.getSerializableExtra("veiculo");
+                        veiculo = new VeiculoDAO(getView().getContext()).veiculoById(veiculo.getId()); //buscar do banco, por que pode ter alterado dados pelo webservice.
                         veiculoAdapter.adicionarVeiculo(veiculo);
 
                         Snackbar.make(getView(), "Veiculo salvo com sucesso!", Snackbar.LENGTH_LONG)
@@ -104,8 +109,8 @@ public class VeiculoListarActivity extends Fragment {
                 if (resultCode == 5) {
 
                     if (data.hasExtra("veiculo")) {
-                        Veiculo veiculo = new Veiculo();
-                        veiculo = (Veiculo) data.getSerializableExtra("veiculo");
+                        Veiculo veiculo = (Veiculo) data.getSerializableExtra("veiculo");
+                        veiculo = new VeiculoDAO(getView().getContext()).veiculoById(veiculo.getId()); //buscar do banco, por que pode ter alterado dados pelo webservice.
                         veiculoAdapter.atualizarVeiculo(veiculo);
 
                         Snackbar.make(getView(), "Veiculo salvo com sucesso!", Snackbar.LENGTH_LONG)

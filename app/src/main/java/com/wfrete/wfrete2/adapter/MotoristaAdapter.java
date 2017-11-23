@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import android.app.Fragment;
 
+import com.wfrete.wfrete2.Funcoes;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.activity.MotoristaListarActivity;
 import com.wfrete.wfrete2.dao.MotoristaDAO;
@@ -35,7 +36,6 @@ import java.util.List;
 public class MotoristaAdapter extends RecyclerView.Adapter<MotoristaHolder> {
 
     private Fragment context;
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("dd-MMM/ HH:mm:ss");
     private final List<Motorista> motoristas;
 
     public MotoristaAdapter(List<Motorista> motoristas, Fragment context) {
@@ -67,19 +67,13 @@ public class MotoristaAdapter extends RecyclerView.Adapter<MotoristaHolder> {
     @Override
     public void onBindViewHolder(MotoristaHolder holder, final int position) {
 
-        Date a = motoristas.get(position).getS_datahora();
-        String str = "Não Sincronizado";
-        if (a != null){
-            str = "Sincronizado em " + timeFormat.format(a);
-            str = str.replace("-", " de ");
-            str = str.replace("/", " as ");
-            holder.s_datahora.setTextColor(Color.BLUE);
-        }else{
+        String str = Funcoes.formataMsgIntegracao(motoristas.get(position).getS_datahora());
+        if (str.equalsIgnoreCase("Não Sincronizado")){
             holder.s_datahora.setTextColor(Color.RED);
+        }else{
+            holder.s_datahora.setTextColor(Color.BLUE);
         }
-
         holder.s_datahora.setText(str);
-
         holder.nome.setText(motoristas.get(position).getNome());
 
         final Motorista motorista = motoristas.get(position);
