@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -53,12 +54,19 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        getSupportActionBar().setTitle("Controle de Fretes");
+
         FragmentManager fragmentManager = getFragmentManager();
 
         //enquanto acessar o app e nao existir um frete, mostrar a tela de incio
         Frete frete = new FreteDAO(this).retornarUltimo();
         if (!(frete != null)){
             fragmentManager.beginTransaction().replace(R.id.content_frame, new InicioActivity()).commit();
+        }
+        //tem um frete.
+        else{
+            getSupportActionBar().setTitle("Listagem de Fretes");
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new FreteListarActivity()).commit();
         }
 
     }
@@ -88,9 +96,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //if (id == R.id.action_settings) {
+        //    return true;
+        //}
 
         return super.onOptionsItemSelected(item);
     }
@@ -104,21 +112,23 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getFragmentManager();
 
         if (id == R.id.nav_frete) {
-
+            getSupportActionBar().setTitle("Listagem de Fretes");
             fragmentManager.beginTransaction().replace(R.id.content_frame, new FreteListarActivity()).commit();
+
 
         }
         else if (id == R.id.nav_categorias) {
-
+            getSupportActionBar().setTitle("Listagem de Categorias");
             fragmentManager.beginTransaction().replace(R.id.content_frame, new CategoriaListarActivity()).commit();
 
         }
         else if (id == R.id.nav_motorista) {
 
+            getSupportActionBar().setTitle("Listagem de Motoristas");
             fragmentManager.beginTransaction().replace(R.id.content_frame, new MotoristaListarActivity()).commit();
 
         } else if (id == R.id.nav_veiculo) {
-
+            getSupportActionBar().setTitle("Listagem de Veículos");
             fragmentManager.beginTransaction().replace(R.id.content_frame, new VeiculoListarActivity()).commit();
 
         }

@@ -75,6 +75,8 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        getSupportActionBar().setTitle("Cadastro de Lançamento");
+
 
         edtVlr = (EditText)findViewById(R.id.edtValorLcto);
         edtObs = (EditText)findViewById(R.id.edtObsLcto);

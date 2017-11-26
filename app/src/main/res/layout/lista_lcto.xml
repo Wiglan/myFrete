@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,15 +23,14 @@
         app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/item_lcto" />
 
+
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabLctos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="12dp"
-        android:layout_marginEnd="12dp"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@mipmap/ic_novo_reg" />
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

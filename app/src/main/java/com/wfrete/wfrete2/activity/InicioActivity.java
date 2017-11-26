@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toolbar;
 
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.util.Constantes;

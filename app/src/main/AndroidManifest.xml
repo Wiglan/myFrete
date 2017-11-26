@@ -14,43 +14,37 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="wFrete"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name="com.wfrete.wfrete2.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="wFrete"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.wfrete.wfrete2.activity.MotoristaCadastrarActivity"
-            android:label="@string/nav_bar_motoristas" >
+            android:name="com.wfrete.wfrete2.activity.MotoristaCadastrarActivity">
         </activity>
         <activity
-            android:name="com.wfrete.wfrete2.activity.VeiculoCadastrarActivity"
-            android:label="@string/nav_bar_veiculos" >
+            android:name="com.wfrete.wfrete2.activity.VeiculoCadastrarActivity">
         </activity>
         <activity
-            android:name="com.wfrete.wfrete2.activity.FreteCadastrarActivity"
-            android:label="@string/nav_bar_fretes" >
+            android:name="com.wfrete.wfrete2.activity.FreteCadastrarActivity" >
         </activity>
         <activity
-            android:name="com.wfrete.wfrete2.activity.LctoCadastrarActivity"
-            android:label="Lcto do Frete" >
+            android:name="com.wfrete.wfrete2.activity.LctoCadastrarActivity">
         </activity>
         <activity
-            android:name="com.wfrete.wfrete2.activity.CategoriaListarNoLctoActivity"
-            android:label="Lista de Categorias" >
+            android:name="com.wfrete.wfrete2.activity.CategoriaListarNoLctoActivity">
         </activity>
         <activity
-            android:name="com.wfrete.wfrete2.activity.CategoriaCadastrarActivity"
-            android:label="Cadastro de Categorias" >
+            android:name="com.wfrete.wfrete2.activity.CategoriaCadastrarActivity" >
         </activity>
 
     </application>

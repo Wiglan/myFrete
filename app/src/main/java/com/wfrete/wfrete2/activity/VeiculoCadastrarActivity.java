@@ -42,6 +42,7 @@ public class VeiculoCadastrarActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        getSupportActionBar().setTitle("Cadastro de Veículo");
 
         edtNome = (EditText)findViewById(R.id.edtNomeVeiculo);
         edtModelo = (EditText)findViewById(R.id.edtModeloVeiculo);

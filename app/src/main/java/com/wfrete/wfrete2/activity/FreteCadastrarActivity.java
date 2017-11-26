@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.wfrete.wfrete2.MainActivity;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.dao.FreteDAO;
 import com.wfrete.wfrete2.dao.MotoristaDAO;
@@ -75,6 +76,7 @@ public class FreteCadastrarActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        getSupportActionBar().setTitle("Cadastro de Frete");
 
         edtNroCte = (EditText)findViewById(R.id.edtNro_CteFrete);
         edtOrigem = (EditText)findViewById(R.id.edtOrigemFrete);
