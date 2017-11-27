@@ -23,6 +23,7 @@ public class FreteHolder extends RecyclerView.ViewHolder implements View.OnClick
     public AppCompatTextView txtDestino;
     public AppCompatTextView txtCliente;
     public AppCompatTextView txtAlterar;
+    public AppCompatTextView txt_datahora;
 
     private ItemClickListener itemClickListener;
 
@@ -36,6 +37,7 @@ public class FreteHolder extends RecyclerView.ViewHolder implements View.OnClick
         txtDestino = (AppCompatTextView) itemView.findViewById(R.id.txtDestinoIF);
         txtCliente = (AppCompatTextView) itemView.findViewById(R.id.txtNomeClienteIF);
         txtAlterar = (AppCompatTextView) itemView.findViewById(R.id.txtAlterarFreteIF);
+        txt_datahora = (AppCompatTextView) itemView.findViewById(R.id.txtStatusSincronizacaoFrete);
 
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wfrete.wfrete2.util.Funcoes;
 import com.wfrete.wfrete2.util.ItemClickListener;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.activity.LctoListarActivity;
@@ -69,6 +70,14 @@ public class LctoAdapter extends RecyclerView.Adapter<LctoHolder> {
     public void onBindViewHolder(LctoHolder holder, final int position) {
 
         Categoria categoria = categoriaDAO.categoriaById(lctos.get(position).getCategoria_id());
+
+        String str = Funcoes.formataMsgIntegracao(lctos.get(position).getS_datahora());
+        if (str.equalsIgnoreCase("Não Sincronizado")){
+            holder.txtS_DataHora.setTextColor(Color.RED);
+        }else{
+            holder.txtS_DataHora.setTextColor(Color.BLUE);
+        }
+        holder.txtS_DataHora.setText(str);
 
         holder.txtCategoria.setText(categoria.getNome());
         holder.txtObs.setText(lctos.get(position).getObservacao());

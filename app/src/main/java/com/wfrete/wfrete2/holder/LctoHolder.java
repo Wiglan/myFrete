@@ -20,6 +20,7 @@ public class LctoHolder extends RecyclerView.ViewHolder implements View.OnClickL
     public TextView txtObs;
     public TextView txtValor;
     public TextView txtData;
+    public TextView txtS_DataHora;
 
     private ItemClickListener itemClickListener;
 
@@ -31,6 +32,7 @@ public class LctoHolder extends RecyclerView.ViewHolder implements View.OnClickL
         txtData = (TextView) itemView.findViewById(R.id.txtDataItemLcto);
         txtObs = (TextView) itemView.findViewById(R.id.txtObsItemLcto);
         txtValor = (TextView) itemView.findViewById(R.id.txtValorItemLcto);
+        txtS_DataHora = (TextView) itemView.findViewById(R.id.txtDataHoraIntegracaoLcto);
 
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);

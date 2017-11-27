@@ -1,16 +1,19 @@
 package com.wfrete.wfrete2.adapter;
 
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
-import android.content.ContextWrapper;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wfrete.wfrete2.dao.FreteDAO;
+import com.wfrete.wfrete2.util.Funcoes;
 import com.wfrete.wfrete2.util.ItemClickListener;
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.activity.FreteListarActivity;
@@ -19,6 +22,8 @@ import com.wfrete.wfrete2.model.Frete;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -34,24 +39,9 @@ public class FreteAdapter extends RecyclerView.Adapter<FreteHolder> {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private DecimalFormat df = new DecimalFormat("#,###.00");
 
-    public FreteAdapter(List<Frete> fretes, Fragment context) {
+    public FreteAdapter(List<Frete> fretes, final Fragment context) {
         this.fretes = fretes;
         this.context = context;
-    }
-
-   // public MotoristaAdapter(List<Motorista> motoristas) {
-    //    this.motoristas = motoristas;
-   // }
-
-    private Activity getActivity(View view) {
-        Context context = view.getContext();
-        while (context instanceof ContextWrapper) {
-            if (context instanceof Activity) {
-                return (Activity)context;
-            }
-            context = ((ContextWrapper)context).getBaseContext();
-        }
-        return null;
     }
 
     @Override
@@ -64,9 +54,28 @@ public class FreteAdapter extends RecyclerView.Adapter<FreteHolder> {
     public void onBindViewHolder(FreteHolder holder, final int position) {
 
 
+        String str = Funcoes.formataMsgIntegracao(fretes.get(position).getS_datahora());
+        if (str.equalsIgnoreCase("Não Sincronizado")){
+            holder.txt_datahora.setTextColor(Color.RED);
+        }else{
+            holder.txt_datahora.setTextColor(Color.BLUE);
+        }
+        holder.txt_datahora.setText(str);
+
         String nroCte =  String.valueOf(fretes.get(position).getNro_cte());
         String dtAbertura = dateFormat.format(fretes.get(position).getData_abertura());
-        String dtEncerramento = "Finalizado:   " + dateFormat.format(fretes.get(position).getData_encerramento());
+
+        Date data = fretes.get(position).getData_encerramento();
+        String dtEncerramento = "";
+        if (data != null){
+            dtEncerramento = "Finalizado:   " + dateFormat.format(data);
+            holder.txtDataEncerramento.setTextColor(Color.BLACK);
+        }
+        else {
+            dtEncerramento = "Encerrar Frete";
+            holder.txtDataEncerramento.setTextColor(Color.BLUE);
+        }
+
         String vlrTotal = "Total Frete: R$ " + df.format(fretes.get(position).getVlr_total());
 
         holder.txtNroCte.setText(nroCte);
@@ -91,6 +100,83 @@ public class FreteAdapter extends RecyclerView.Adapter<FreteHolder> {
             }
         });
 
+        holder.txtDataEncerramento.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                int ano;
+                int mes;
+                int dia;
+                Date dataEncerramento = frete.getData_encerramento();
+
+                if (dataEncerramento != null){
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(dataEncerramento);
+                    ano = calendar.get(Calendar.YEAR);
+                    mes = calendar.get(Calendar.MONTH);
+                    dia = calendar.get(Calendar.DAY_OF_MONTH);
+
+                }else {
+                    Calendar calendar = Calendar.getInstance();
+                    ano = calendar.get(Calendar.YEAR);
+                    mes = calendar.get(Calendar.MONTH);
+                    dia = calendar.get(Calendar.DAY_OF_MONTH);
+                }
+
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(ano, mes, dia);
+
+                DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+
+                                int idFrete = frete.getId();
+                                Calendar dtEncerramento = Calendar.getInstance();
+                                dtEncerramento.set(year, monthOfYear, dayOfMonth);
+                                Date dt = dtEncerramento.getTime();
+                                boolean sucesso = new FreteDAO(context.getActivity()).salvar_dataEncerramento(idFrete,dt);
+
+                                if (sucesso){
+                                    frete.setData_encerramento(dt);
+                                    atualizarFrete(frete);
+                                }
+                            }
+                        },
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)
+                );
+
+                //definir o intervalo possivel de selecao.
+                Calendar min = Calendar.getInstance();
+                Calendar max = Calendar.getInstance();
+                min.set(max.get(Calendar.YEAR), 0, 1);
+                max.set(max.get(Calendar.YEAR) + 1, 11, 31);
+
+                datePickerDialog.setMinDate(min);
+                datePickerDialog.setMaxDate(max);
+
+                datePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        boolean sucesso = new FreteDAO(context.getActivity()).salvar_dataEncerramento(frete.getId(),null);
+                        if (sucesso){
+                            frete.setData_encerramento(null);
+                            atualizarFrete(frete);
+                        }
+                    }
+                });
+                datePickerDialog.show(context.getFragmentManager(), "datePickerDialog");
+
+            }
+        });
+
+
+
+
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
@@ -111,38 +197,7 @@ public class FreteAdapter extends RecyclerView.Adapter<FreteHolder> {
             }
         });
 
-        /*
 
-/*
-        holder.btExcluir.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final View view = v;
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Confirmação")
-                        .setMessage("Tem certeza que deseja excluir este Frete?")
-                        .setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Frete frete = fretes.get(position);
-                                FreteDAO dao = new FreteDAO(view.getContext());
-                                boolean sucesso = dao.excluir(frete.getId());
-                                if (sucesso) {
-                                    removerFrete(frete);
-                                    Snackbar.make(view, "Frete excluido com sucesso!", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
-                                } else {
-                                    Snackbar.make(view, "Erro ao excluir o Frete!", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
-                                }
-                            }
-                        })
-                        .setNegativeButton("Cancelar", null)
-                        .create()
-                        .show();
-            }
-        });
-*/
     }
 
     @Override
@@ -168,4 +223,8 @@ public class FreteAdapter extends RecyclerView.Adapter<FreteHolder> {
         notifyItemChanged(position);
         //somente o removed nao funciona, tem que chamar o changed.
     }
+
+
+
+
 }

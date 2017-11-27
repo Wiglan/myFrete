@@ -21,11 +21,15 @@ public class Frete implements Serializable {
     private int motorista_id;
     private int veiculo_id;
     private String cliente;
+    private int s_id;
+    private Date s_datahora;
+
 
     public Frete() {
     }
 
-    public Frete(int id, int nro_cte, String origem, String destino, double vlr_ton, double peso, double vlr_total, Date data_abertura, Date data_encerramento, int motorista_id, int veiculo_id, String cliente) {
+    public Frete(int id, int nro_cte, String origem, String destino, double vlr_ton, double peso, double vlr_total, Date data_abertura,
+                 Date data_encerramento, int motorista_id, int veiculo_id, String cliente, int s_id, Date s_datahora) {
         this.id = id;
         this.nro_cte = nro_cte;
         this.origem = origem;
@@ -38,6 +42,8 @@ public class Frete implements Serializable {
         this.motorista_id = motorista_id;
         this.veiculo_id = veiculo_id;
         this.cliente = cliente;
+        this.s_datahora = s_datahora;
+        this.s_id = s_id;
     }
 
     public int getId() {
@@ -135,6 +141,23 @@ public class Frete implements Serializable {
 
     public void setCliente(String cliente) {
         this.cliente = cliente;
+    }
+
+
+    public int getS_id() {
+        return s_id;
+    }
+
+    public void setS_id(int s_id) {
+        this.s_id = s_id;
+    }
+
+    public Date getS_datahora() {
+        return s_datahora;
+    }
+
+    public void setS_datahora(Date s_datahora) {
+        this.s_datahora = s_datahora;
     }
 
 

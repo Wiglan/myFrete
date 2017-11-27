@@ -99,8 +99,10 @@ public class FreteListarActivity extends Fragment {
                 if (resultCode == 2) {
 
                     if (data.hasExtra("frete")) {
-                        Frete frete = new Frete();
-                        frete = (Frete) data.getSerializableExtra("frete");
+
+                        Frete frete = (Frete) data.getSerializableExtra("frete");
+                        frete = new FreteDAO(getView().getContext()).freteById(frete.getId()); //buscar do banco, por que pode ter alterado dados pelo webservice.
+                        
                         freteAdapter.adicionarFrete(frete);
 
                         Snackbar.make(getView(), "Frete salvo com sucesso!", Snackbar.LENGTH_LONG)
@@ -114,8 +116,9 @@ public class FreteListarActivity extends Fragment {
                 if (resultCode == 5) {
 
                     if (data.hasExtra("frete")) {
-                        Frete frete = new Frete();
-                        frete = (Frete) data.getSerializableExtra("frete");
+                        Frete frete = (Frete) data.getSerializableExtra("frete");
+                        frete = new FreteDAO(getView().getContext()).freteById(frete.getId()); //buscar do banco, por que pode ter alterado dados pelo webservice.
+
                         freteAdapter.atualizarFrete(frete);
 
                         Snackbar.make(getView(), "Frete salvo com sucesso!", Snackbar.LENGTH_LONG)
@@ -128,8 +131,8 @@ public class FreteListarActivity extends Fragment {
                 else if (resultCode == 13){
 
                     if (data.hasExtra("frete")) {
-                        Frete frete = new Frete();
-                        frete = (Frete) data.getSerializableExtra("frete");
+                        Frete frete = (Frete) data.getSerializableExtra("frete");
+                        frete = new FreteDAO(getView().getContext()).freteById(frete.getId()); //buscar do banco, por que pode ter alterado dados pelo webservice.
                         freteAdapter.removerFrete(frete);
                         Snackbar.make(getView(), "Frete Excluído com sucesso!", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();

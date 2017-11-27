@@ -12,7 +12,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="13dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -168,6 +171,21 @@
 
     </LinearLayout>
 
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txtStatusSincronizacaoFrete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nao sincronizado"
+        android:textColor="@color/colorPrimary"
+        android:layout_gravity="bottom|left"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="10dp"
+        android:textStyle="italic|bold"
+        android:textSize="10dp"
+        />
+
     <android.support.v7.widget.AppCompatTextView
             android:id="@+id/txtAlterarFreteIF"
             android:layout_width="wrap_content"
@@ -179,6 +197,7 @@
             android:paddingRight="10dp"
             android:textStyle="italic|bold"
         />
+
 
 
 </android.support.v7.widget.CardView>

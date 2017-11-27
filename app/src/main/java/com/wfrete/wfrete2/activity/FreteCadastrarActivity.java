@@ -227,10 +227,11 @@ public class FreteCadastrarActivity extends AppCompatActivity {
                                   Double.parseDouble(edtPeso.getText().toString()),
                                   Double.parseDouble(edtVlr_Total.getText().toString()),
                                   data,
-                                  data,
+                                  freteEditado.getData_encerramento(),
                                   getIdAutoCompleteList(acMotorista.getText().toString()),
                                   getIdAutoCompleteList(acVeiculo.getText().toString()),
-                                  edtCliente.getText().toString());
+                                  edtCliente.getText().toString(), freteEditado.getS_id(),
+                    null);
 
         }
         else {
@@ -245,22 +246,23 @@ public class FreteCadastrarActivity extends AppCompatActivity {
                     Double.parseDouble(edtPeso.getText().toString()),
                     Double.parseDouble(edtVlr_Total.getText().toString()),
                     data,
-                    data,
+                    null,
                     getIdAutoCompleteList(acMotorista.getText().toString()),
                     getIdAutoCompleteList(acVeiculo.getText().toString()),
-                    edtCliente.getText().toString());
+                    edtCliente.getText().toString(),0, null);
 
         }
 
         if (inserido) {
 
+            Frete frete;
             if(freteEditado != null) {
-                Frete frete = dao.freteById(freteEditado.getId());
+                frete = dao.freteById(freteEditado.getId());
                 Intent intent = getIntent();
                 intent.putExtra("frete", frete);
                 setResult(Constantes.ID_COM_REG_ALTERADO,intent);
             }else {
-                Frete frete = dao.retornarUltimo();
+                frete = dao.retornarUltimo();
                 Intent intent = getIntent();
                 intent.putExtra("frete", frete);
                 setResult(Constantes.ID_COM_NOVO_REG_INSERIDO,intent);

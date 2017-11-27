@@ -18,8 +18,6 @@ import android.widget.Toast;
 
 import com.wfrete.wfrete2.R;
 import com.wfrete.wfrete2.adapter.LctoAdapter;
-import com.wfrete.wfrete2.api.ServiceGenerator;
-import com.wfrete.wfrete2.api.service.CategoriaService;
 import com.wfrete.wfrete2.dao.FreteDAO;
 import com.wfrete.wfrete2.dao.LctoDAO;
 import com.wfrete.wfrete2.model.Frete;
@@ -114,8 +112,9 @@ public class LctoListarActivity extends Fragment {
                 if (resultCode == 2) {
 
                     if (data.hasExtra("lcto")) {
-                        Lcto lcto = new Lcto();
-                        lcto = (Lcto) data.getSerializableExtra("lcto");
+                        Lcto lcto = (Lcto) data.getSerializableExtra("lcto");
+                        lcto = new LctoDAO(getView().getContext()).lctoById(lcto.getId()); //buscar do banco, por que pode ter alterado dados pelo webservice.
+                        
                         lctoAdapter.adicionarLcto(lcto);
 
                         Snackbar.make(getView(), "Lançamento salvo com sucesso!", Snackbar.LENGTH_LONG)
@@ -129,8 +128,10 @@ public class LctoListarActivity extends Fragment {
                 if (resultCode == 5) {
 
                     if (data.hasExtra("lcto")) {
-                        Lcto lcto = new Lcto();
-                        lcto = (Lcto) data.getSerializableExtra("lcto");
+
+                        Lcto lcto = (Lcto) data.getSerializableExtra("lcto");
+                        lcto = new LctoDAO(getView().getContext()).lctoById(lcto.getId()); //buscar do banco, por que pode ter alterado dados pelo webservice.
+
                         lctoAdapter.atualizarLcto(lcto);
 
                         Snackbar.make(getView(), "Lançamento salvo com sucesso!", Snackbar.LENGTH_LONG)
@@ -143,8 +144,10 @@ public class LctoListarActivity extends Fragment {
                 else if (resultCode == 13){
 
                     if (data.hasExtra("lcto")) {
-                        Lcto lcto = new Lcto();
-                        lcto = (Lcto) data.getSerializableExtra("lcto");
+
+                        Lcto lcto = (Lcto) data.getSerializableExtra("lcto");
+                        lcto = new LctoDAO(getView().getContext()).lctoById(lcto.getId()); //buscar do banco, por que pode ter alterado dados pelo webservice.
+
                         lctoAdapter.removerLcto(lcto);
                         Snackbar.make(getView(), "Lnçamento Excluído com sucesso!", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();

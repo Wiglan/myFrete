@@ -7,6 +7,7 @@ import android.database.Cursor;
 import com.wfrete.wfrete2.bd.DbGateway;
 import com.wfrete.wfrete2.model.Lcto;
 import com.wfrete.wfrete2.util.Constantes;
+import com.wfrete.wfrete2.util.Funcoes;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -34,11 +35,11 @@ public class LctoDAO {
         gw = DbGateway.getInstance(ctx);
     }
 
-    public boolean salvar(int frete_id, double valor, int categoria_id, String obs, Date data, Time hora){
-        return salvar(0, frete_id, valor, categoria_id, obs, data, hora);
+    public boolean salvar(int frete_id, double valor, int categoria_id, String obs, Date data, Time hora, int s_id, Date s_datahora){
+        return salvar(0, frete_id, valor, categoria_id, obs, data, hora, s_id, s_datahora);
     }
 
-    public boolean salvar(int id, int frete_id, double valor, int categoria_id, String obs, Date data, Time hora){
+    public boolean salvar(int id, int frete_id, double valor, int categoria_id, String obs, Date data, Time hora, int s_id, Date s_datahora){
 
         ContentValues cv = new ContentValues();
 
@@ -49,12 +50,27 @@ public class LctoDAO {
         cv.put("data", dateFormat.format(data));
         cv.put("hora", hora.getTime());
 
+        cv.put("s_id", s_id);
+
+        if (s_datahora != null){
+            cv.put("s_datahora", Funcoes.dateFormatIntegracao.format(s_datahora));
+        }
+        else {
+            cv.putNull("s_datahora");
+        }
 
         if(id > 0)
             return gw.getDatabase().update(Constantes.TABLE_LCTO, cv, "ID=?", new String[]{ id + "" }) > 0;
         else
             return gw.getDatabase().insert(Constantes.TABLE_LCTO, null, cv) > 0;
 
+    }
+
+    public boolean salvar_dados_integracao(int id, int s_id, String s_datahora){
+        ContentValues cv = new ContentValues();
+        cv.put("s_id", s_id);
+        cv.put("s_datahora", s_datahora);
+        return gw.getDatabase().update(Constantes.TABLE_CATEGORIAS, cv, "ID=?", new String[]{ id + "" }) > 0;
     }
 
     public boolean excluir(int id){
@@ -80,7 +96,19 @@ public class LctoDAO {
 
             Time hora = new Time(cursor.getLong(cursor.getColumnIndex("HORA")));
 
-            lctos.add(new Lcto(id,frete_id, valor, categoria_id, observacao, data, hora));
+            int s_id = cursor.getInt(cursor.getColumnIndex("S_ID"));
+
+            Date s_datahora = null;
+            try {
+                String dataStr = cursor.getString(cursor.getColumnIndex("S_DATAHORA"));
+                if (dataStr != null){
+                    s_datahora = Funcoes.dateFormatIntegracao.parse(dataStr);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            lctos.add(new Lcto(id,frete_id, valor, categoria_id, observacao, data, hora, s_id, s_datahora));
         }
         cursor.close();
         return lctos;
@@ -105,8 +133,21 @@ public class LctoDAO {
             }
 
             Time hora = new Time(cursor.getLong(cursor.getColumnIndex("HORA")));
+
+            int s_id = cursor.getInt(cursor.getColumnIndex("S_ID"));
+
+            Date s_datahora = null;
+            try {
+                String dataStr = cursor.getString(cursor.getColumnIndex("S_DATAHORA"));
+                if (dataStr != null){
+                    s_datahora = Funcoes.dateFormatIntegracao.parse(dataStr);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             cursor.close();
-            return new Lcto(id,frete_id, valor, categoria_id, observacao, data, hora);
+            return new Lcto(id,frete_id, valor, categoria_id, observacao, data, hora, s_id, s_datahora);
         }
 
         return null;
@@ -133,8 +174,21 @@ public class LctoDAO {
             }
 
             Time hora = new Time(cursor.getLong(cursor.getColumnIndex("HORA")));
+
+            int s_id = cursor.getInt(cursor.getColumnIndex("S_ID"));
+
+            Date s_datahora = null;
+            try {
+                String dataStr = cursor.getString(cursor.getColumnIndex("S_DATAHORA"));
+                if (dataStr != null){
+                    s_datahora = Funcoes.dateFormatIntegracao.parse(dataStr);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             cursor.close();
-            return new Lcto(id,frete_id, valor, categoria_id, observacao, data, hora);
+            return new Lcto(id,frete_id, valor, categoria_id, observacao, data, hora, s_id, s_datahora);
 
         }
         else {

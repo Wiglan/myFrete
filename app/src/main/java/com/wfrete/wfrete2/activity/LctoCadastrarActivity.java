@@ -34,6 +34,8 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
 /**
  * Created by Desenvolvimento 11 on 06/11/2017.
  */
@@ -312,7 +314,7 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
                                   categoria,
                                   edtObs.getText().toString(),
                                   data,
-                                  hora);
+                                  hora, lctoEditado.getS_id(), null);
         }
         else {
 
@@ -321,7 +323,7 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
                     categoria,
                     edtObs.getText().toString(),
                     data,
-                    hora);
+                    hora, 0, null);
         }
 
         if (inserido) {
@@ -382,14 +384,23 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
 
     public int getIdCategoria(String str){
 
-        Categoria categoria = new CategoriaDAO(this).categoriaByNome(str);
+        //isso aqui nao funciona para nomes com acento. 
+        //Categoria categoria = new CategoriaDAO(this).categoriaByNome(str);
 
-        if (categoria != null){
-            return categoria.getId();
-        }else {
-            return 0;
+        //entao tive que pegar todas as categorias e buscar na lista.
+        List<Categoria> categorias = new CategoriaDAO(this).ListarCategorias();
+
+        String nome = "";
+
+        for (Categoria categoria : categorias) {
+
+            nome = categoria.getNome().trim();
+            if (nome.equalsIgnoreCase(str)){
+                return categoria.getId();
+            }
         }
 
+        return 0;
 
     }
 

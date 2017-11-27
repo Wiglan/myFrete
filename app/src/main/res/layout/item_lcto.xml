@@ -37,6 +37,16 @@
             android:textSize="12sp"
             tools:text="Nro da nota 132" />
 
+        <TextView
+            android:id="@+id/txtDataHoraIntegracaoLcto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Não integrado"
+            android:gravity="bottom|left"
+            android:textSize="10dp"
+            />
+
+
     </LinearLayout>
 
 
@@ -61,6 +71,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/Text.ListItemSubtitle"
             tools:text="DOM, 22 Dez" />
+
     </LinearLayout>
 
 
