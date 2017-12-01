@@ -17,7 +17,7 @@ import retrofit2.Call;
 
 public class MotoristaController {
 
-    public static void wsSalvarMotorista(Context context,  Motorista motorista){
+    public static boolean wsSalvarMotorista(Context context,  Motorista motorista){
 
         int localizadorMotoristaWS = 0;
         int idLocalMotorista = motorista.getId();
@@ -55,12 +55,19 @@ public class MotoristaController {
                 if (retornoIntegracao.getDthr_integracao() != null){
                     dao.salvar_dados_integracao(idLocalMotorista,
                             retornoIntegracao.getId_gerado(), retornoIntegracao.getDthr_integracao());
+                    return true;
                 }
+
+                return false;
 
             }catch (Exception ex){
                 ex.printStackTrace();
+                return false;
             }
 
+        }
+        else {
+            return  false;
         }
 
     }

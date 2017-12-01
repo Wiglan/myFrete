@@ -70,7 +70,7 @@ public class LctoDAO {
         ContentValues cv = new ContentValues();
         cv.put("s_id", s_id);
         cv.put("s_datahora", s_datahora);
-        return gw.getDatabase().update(Constantes.TABLE_CATEGORIAS, cv, "ID=?", new String[]{ id + "" }) > 0;
+        return gw.getDatabase().update(Constantes.TABLE_LCTO, cv, "ID=?", new String[]{ id + "" }) > 0;
     }
 
     public boolean excluir(int id){

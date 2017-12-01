@@ -1,6 +1,7 @@
 package com.wfrete.wfrete2.activity;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -74,6 +76,9 @@ public class LctoListarActivity extends Fragment {
         }
 
         configurarRecycler(view);
+
+        String str = "Lctos do Frete: " +  String.valueOf(frete_origem.getNro_cte());
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(str);
 
     }
 
@@ -146,10 +151,9 @@ public class LctoListarActivity extends Fragment {
                     if (data.hasExtra("lcto")) {
 
                         Lcto lcto = (Lcto) data.getSerializableExtra("lcto");
-                        lcto = new LctoDAO(getView().getContext()).lctoById(lcto.getId()); //buscar do banco, por que pode ter alterado dados pelo webservice.
 
                         lctoAdapter.removerLcto(lcto);
-                        Snackbar.make(getView(), "Lnçamento Excluído com sucesso!", Snackbar.LENGTH_LONG)
+                        Snackbar.make(getView(), "Lançamento Excluído com sucesso!", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
 
                     }

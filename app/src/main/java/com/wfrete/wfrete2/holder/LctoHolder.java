@@ -12,7 +12,7 @@ import com.wfrete.wfrete2.R;
  * Created by Desenvolvimento 11 on 20/08/2017.
  */
 
-//classe que mapeia os itens do REcicleView
+//classe que mapeia os itens do RecyclerView
 
 public class LctoHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 

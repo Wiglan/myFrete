@@ -105,6 +105,8 @@ public class FreteDAO {
         return gw.getDatabase().delete(Constantes.TABLE_FRETES, "ID=?", new String[]{ id + "" }) > 0;
     }
 
+
+
     public List<Frete> ListarFretes(){
         List<Frete> fretes = new ArrayList<>();
         Cursor cursor = gw.getDatabase().rawQuery("SELECT * FROM Fretes ORDER BY ID DESC", null);

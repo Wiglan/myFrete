@@ -17,7 +17,7 @@ import retrofit2.Call;
 
 public class CategoriaController {
 
-    public static void wsSalvarCategoria(Context context,  Categoria categoria){
+    public static boolean wsSalvarCategoria(Context context,  Categoria categoria){
 
         int localizadorCategoriaWS = 0;
         int idLocalCategoria = categoria.getId();
@@ -55,12 +55,19 @@ public class CategoriaController {
                 if (retornoIntegracao.getDthr_integracao() != null){
                     dao.salvar_dados_integracao(idLocalCategoria,
                             retornoIntegracao.getId_gerado(), retornoIntegracao.getDthr_integracao());
+                    return true;
                 }
+
+                return false;
 
             }catch (Exception ex){
                 ex.printStackTrace();
+                return false;
             }
 
+        }
+        else {
+            return false;
         }
 
     }

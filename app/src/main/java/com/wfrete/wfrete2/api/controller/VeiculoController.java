@@ -17,7 +17,7 @@ import retrofit2.Call;
 
 public class VeiculoController {
 
-    public static void wsSalvarVeiculo(Context context,  Veiculo veiculo){
+    public static boolean wsSalvarVeiculo(Context context,  Veiculo veiculo){
 
         int localizadorVeiculoWS = 0;
         int idLocalVeiculo = veiculo.getId();
@@ -55,12 +55,18 @@ public class VeiculoController {
                 if (retornoIntegracao.getDthr_integracao() != null){
                     dao.salvar_dados_integracao(idLocalVeiculo,
                             retornoIntegracao.getId_gerado(), retornoIntegracao.getDthr_integracao());
+                    return true;
                 }
+
+                return false;
 
             }catch (Exception ex){
                 ex.printStackTrace();
+                return false;
             }
 
+        }else {
+            return false;
         }
 
     }

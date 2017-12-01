@@ -23,6 +23,9 @@ public class Frete implements Serializable {
     private String cliente;
     private int s_id;
     private Date s_datahora;
+    private String dataAberturaStringFrete;
+    private String dataEncerramentoStringFrete;
+
 
 
     public Frete() {
@@ -160,6 +163,22 @@ public class Frete implements Serializable {
         this.s_datahora = s_datahora;
     }
 
+
+    public String getDataAberturaStringFrete() {
+        return dataAberturaStringFrete;
+    }
+
+    public void setDataAberturaStringFrete(String dataAberturaStringFrete) {
+        this.dataAberturaStringFrete = dataAberturaStringFrete;
+    }
+
+    public String getDataEncerramentoStringFrete() {
+        return dataEncerramentoStringFrete;
+    }
+
+    public void setDataEncerramentoStringFrete(String dataEncerramentoStringFrete) {
+        this.dataEncerramentoStringFrete = dataEncerramentoStringFrete;
+    }
 
     @Override
     public boolean equals(Object o) {

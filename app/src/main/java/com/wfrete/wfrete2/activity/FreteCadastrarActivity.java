@@ -20,6 +20,9 @@ import android.widget.Toast;
 
 import com.wfrete.wfrete2.MainActivity;
 import com.wfrete.wfrete2.R;
+import com.wfrete.wfrete2.api.controller.FreteController;
+import com.wfrete.wfrete2.api.controller.MotoristaController;
+import com.wfrete.wfrete2.api.controller.VeiculoController;
 import com.wfrete.wfrete2.dao.FreteDAO;
 import com.wfrete.wfrete2.dao.MotoristaDAO;
 import com.wfrete.wfrete2.dao.VeiculoDAO;
@@ -266,6 +269,45 @@ public class FreteCadastrarActivity extends AppCompatActivity {
                 Intent intent = getIntent();
                 intent.putExtra("frete", frete);
                 setResult(Constantes.ID_COM_NOVO_REG_INSERIDO,intent);
+            }
+
+
+            boolean permiteWs = true;
+            Frete freteWS = new Frete(frete.getId(), frete.getNro_cte(),frete.getOrigem(),
+                    frete.getDestino(), frete.getVlr_ton(), frete.getPeso(), frete.getVlr_total(), frete.getData_abertura(),
+                    frete.getData_encerramento(), frete.getMotorista_id(), frete.getVeiculo_id(), frete.getCliente(),
+                    frete.getS_id(), frete.getS_datahora());
+
+            //verificar se as dependencias ja esta integrada, se nao estiver, precisa integrar antes
+            Motorista m = new MotoristaDAO(this).motoristaById(frete.getMotorista_id());
+            if (m.getS_datahora() == null){
+
+                if (!(MotoristaController.wsSalvarMotorista(this, m))){
+                    permiteWs = false;
+                }else{
+                    Motorista newMotorista = new MotoristaDAO(this).motoristaById(frete.getMotorista_id());
+                    freteWS.setMotorista_id(newMotorista.getS_id());
+                }
+
+            }else{
+                freteWS.setMotorista_id(m.getS_id());
+            }
+
+            Veiculo v = new VeiculoDAO(this).veiculoById(frete.getVeiculo_id());
+            if (v.getS_datahora() == null){
+                if (!(VeiculoController.wsSalvarVeiculo(this, v))){
+                    permiteWs = false;
+                }else {
+                    Veiculo newVeiculo = new VeiculoDAO(this).veiculoById(frete.getVeiculo_id());
+                    freteWS.setVeiculo_id(newVeiculo.getS_id());
+                }
+
+            }else {
+                freteWS.setVeiculo_id(v.getS_id());
+            }
+
+            if (permiteWs) {
+                FreteController.wsSalvarFrete(this, freteWS);
             }
 
             finish();

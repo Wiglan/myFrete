@@ -19,6 +19,7 @@ public class Lcto implements Serializable {
     private Time hora;
     private int s_id;
     private Date s_datahora;
+    private String datahoraStringLcto;
 
     public Lcto() {
     }
@@ -33,7 +34,6 @@ public class Lcto implements Serializable {
         this.hora = hora;
         this.s_datahora = s_datahora;
         this.s_id = s_id;
-
     }
 
     public int getId() {
@@ -109,6 +109,14 @@ public class Lcto implements Serializable {
         this.s_datahora = s_datahora;
     }
 
+
+    public String getDatahoraStringLcto() {
+        return datahoraStringLcto;
+    }
+
+    public void setDatahoraStringLcto(String datahoraStringLcto) {
+        this.datahoraStringLcto = datahoraStringLcto;
+    }
 
     @Override
     public boolean equals(Object o) {

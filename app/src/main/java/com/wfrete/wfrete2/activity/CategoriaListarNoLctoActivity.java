@@ -38,6 +38,8 @@ public class CategoriaListarNoLctoActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lista_categoria_no_lcto);
 
+        getSupportActionBar().setTitle("Listagem de Categorias");
+
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

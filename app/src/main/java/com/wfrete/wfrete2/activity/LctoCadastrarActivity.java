@@ -22,10 +22,14 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wfrete.wfrete2.R;
+import com.wfrete.wfrete2.api.controller.CategoriaController;
+import com.wfrete.wfrete2.api.controller.FreteController;
+import com.wfrete.wfrete2.api.controller.LctoController;
 import com.wfrete.wfrete2.dao.CategoriaDAO;
 import com.wfrete.wfrete2.dao.FreteDAO;
 import com.wfrete.wfrete2.dao.LctoDAO;
 import com.wfrete.wfrete2.model.Categoria;
+import com.wfrete.wfrete2.model.Frete;
 import com.wfrete.wfrete2.model.Lcto;
 import com.wfrete.wfrete2.util.Constantes;
 
@@ -328,16 +332,58 @@ public class LctoCadastrarActivity extends AppCompatActivity implements DatePick
 
         if (inserido) {
 
+            Lcto lcto;
+
             if(lctoEditado != null) {
-                Lcto lcto = dao.lctoById(lctoEditado.getId());
+                lcto = dao.lctoById(lctoEditado.getId());
                 Intent intent = getIntent();
                 intent.putExtra("lcto", lcto);
                 setResult(Constantes.ID_COM_REG_ALTERADO,intent);
             }else {
-                Lcto lcto = dao.retornarUltimo();
+                lcto = dao.retornarUltimo();
                 Intent intent = getIntent();
                 intent.putExtra("lcto", lcto);
                 setResult(Constantes.ID_COM_NOVO_REG_INSERIDO,intent);
+            }
+
+            boolean permiteWS = true;
+            Lcto lctoWS = new Lcto(lcto.getId(), lcto.getFrete_id(),lcto.getValor(),lcto.getCategoria_id(), lcto.getObservacao(),
+                                  lcto.getData(), lcto.getHora(), lcto.getS_id(), lcto.getS_datahora());
+
+            //verificar se a categoria ja esta integrada, se nao estiver, precisa integrar antes
+            Categoria c = new CategoriaDAO(this).categoriaById(lcto.getCategoria_id());
+            if (c.getS_datahora() == null){
+                if (!(CategoriaController.wsSalvarCategoria(this, c))){
+                    permiteWS = false;
+                }
+                else {
+                    Categoria newCategoria = new CategoriaDAO(this).categoriaById(lcto.getCategoria_id());
+                    lctoWS.setCategoria_id(newCategoria.getS_id());
+                }
+
+            }
+            else {
+                lctoWS.setCategoria_id(c.getS_id());
+            }
+
+            //verificar se o Frete ja esta integrado, se nao estiver, precisa integrar antes
+            Frete frete = new FreteDAO(this).freteById(lctoWS.getFrete_id());
+            if (frete.getS_datahora() == null){
+                if (!(FreteController.wsSalvarFrete(this, frete))){
+                    permiteWS = false;
+                }
+                else {
+                    //se conseguiu integrar o frete, tem que passar o id do frente no servidor para sincronizar.
+                    Frete newFrete = new FreteDAO(this).freteById(lctoWS.getFrete_id());
+                    lctoWS.setFrete_id(newFrete.getS_id());
+                }
+            }
+            else {
+                lctoWS.setFrete_id(frete.getS_id());
+            }
+
+            if (permiteWS) {
+                LctoController.wsSalvarLcto(this, lctoWS);
             }
 
             finish();
